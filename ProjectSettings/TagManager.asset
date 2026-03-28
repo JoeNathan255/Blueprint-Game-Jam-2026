@@ -48,3 +48,6 @@ TagManager:
   - name: Collision
     uniqueID: 2764488017
     locked: 0
+  - name: Debug
+    uniqueID: 267771993
+    locked: 0

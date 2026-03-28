@@ -9,7 +9,6 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D entityRigidbody;
     private Animator entityAnimator;
 
-
     void Start()
     {
         entityRigidbody = GetComponent<Rigidbody2D>();
