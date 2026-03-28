@@ -5,9 +5,10 @@ public class WaypointMovement : MonoBehaviour
     [SerializeField] private GameObject sprite;
     [SerializeField] private float speed = 1f;
     [SerializeField] private GameObject[] waypoints;
+    [SerializeField] private VisionComponent visionComponent;
     [SerializeField] private float margin = 0.1f;
-    [SerializeField] private bool isMovementSystemActive = true;
-
+    
+    public bool isMovementSystemActive = false;
     private Rigidbody2D entityRigidbody;
     private Animator entityAnimator;
     private int nextWaypointIndex = 0;
@@ -52,6 +53,7 @@ public class WaypointMovement : MonoBehaviour
             entityAnimator.SetBool("IsWalking", true);
             entityAnimator.SetFloat("InputX", normalizedInputVec.x);
             entityAnimator.SetFloat("InputY", normalizedInputVec.y);
+            visionComponent.SetLookDirection(normalizedInputVec);
         }
         else
         {

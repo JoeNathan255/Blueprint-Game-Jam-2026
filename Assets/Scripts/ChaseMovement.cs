@@ -6,11 +6,11 @@ public class ChaseMovement : MonoBehaviour
 {
     [SerializeField] private GameObject sprite;
     [SerializeField] private float speed = 1f;
-    [SerializeField] private bool isMovementSystemActive = true;
     [SerializeField] private GameObject target;
     [SerializeField] private VisionComponent visionComponent;
     [SerializeField] private float margin = 2f;
 
+    public bool isMovementSystemActive = false;
     private Rigidbody2D entityRigidbody;
     private Animator entityAnimator;
     private bool oneShot = true;
@@ -32,6 +32,8 @@ public class ChaseMovement : MonoBehaviour
                     Debug.Log("Target Reached!");
                 }
                 oneShot = false;
+
+                GlobalEvents.BroadcastGameOver();
             }
             else
             {
