@@ -6,27 +6,30 @@ public class WaypointMovement : MonoBehaviour
     [SerializeField] private float speed = 1f;
     [SerializeField] private GameObject[] waypoints;
     [SerializeField] private float margin = 0.1f;
+    [SerializeField] private bool isMovementSystemActive = true;
 
-    private Rigidbody2D rigidbody;
-    private Animator animator;
+    private Rigidbody2D entityRigidbody;
+    private Animator entityAnimator;
     private int nextWaypointIndex = 0;
-
 
     void Start()
     {
-        rigidbody = GetComponent<Rigidbody2D>();
-        animator = sprite.GetComponent<Animator>();
+        entityRigidbody = GetComponent<Rigidbody2D>();
+        entityAnimator = sprite.GetComponent<Animator>();
     }
 
     void Update()
     {
-        if (IsAtNextWaypoint(margin))
+        if (isMovementSystemActive)
         {
-            nextWaypointIndex++; 
-            nextWaypointIndex = (nextWaypointIndex < waypoints.Length) ? nextWaypointIndex : 0;
-        }
+            if (IsAtNextWaypoint(margin))
+            {
+                nextWaypointIndex++;
+                nextWaypointIndex = (nextWaypointIndex < waypoints.Length) ? nextWaypointIndex : 0;
+            }
 
-        Move(GetDirectionToNextWaypoint());
+            Move(GetDirectionToNextWaypoint());
+        }
     }
 
     private bool IsAtNextWaypoint(float margin)
@@ -42,17 +45,17 @@ public class WaypointMovement : MonoBehaviour
 
     private void Move(Vector2 normalizedInputVec)
     {
-        rigidbody.velocity = normalizedInputVec * speed;
+        entityRigidbody.velocity = normalizedInputVec * speed;
 
         if (normalizedInputVec.x > 0 || normalizedInputVec.y > 0 || normalizedInputVec.x < 0 || normalizedInputVec.y < 0)
         {
-            animator.SetBool("IsWalking", true);
-            animator.SetFloat("InputX", normalizedInputVec.x);
-            animator.SetFloat("InputY", normalizedInputVec.y);
+            entityAnimator.SetBool("IsWalking", true);
+            entityAnimator.SetFloat("InputX", normalizedInputVec.x);
+            entityAnimator.SetFloat("InputY", normalizedInputVec.y);
         }
         else
         {
-            animator.SetBool("IsWalking", false);
+            entityAnimator.SetBool("IsWalking", false);
         }
     }
 }
