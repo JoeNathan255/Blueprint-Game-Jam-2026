@@ -1,5 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+
 //using TMPro;
 using UnityEngine;
 
@@ -14,6 +17,9 @@ public class Rhythm : MonoBehaviour
 
     //The number of seconds for each song beat
     public float secPerBeat;
+
+    //the margin of error between a beat hit and miss, in seconds
+    public static float tolerance = .1f;
 
     // the amount of beats that the pattern detailed in rhythmPattern goes on for before looping.
     // 4 for a song in 4/4, 3 for 3/4, 3.5 for 7/8, etc. does this make sense. i dont know.
@@ -34,17 +40,23 @@ public class Rhythm : MonoBehaviour
     //an AudioSource attached to this GameObject that will play the music.
     public AudioSource musicSource;
 
+    //the earliness/lateness of each input
+    public float calibrationOffset = 0;
+
     /* pattern beats to track accuracy for!
     * EX: if i wanted to track beats on 1, the and of 2, and 3 for a 3/4 measure,
     * my array would look like [0 1.5 2]. BEATS START COUNTING AT ZERO !! */
-    public float[] rhythmPattern;
+    public List<float> rhythmPattern;
 
     //offset before first beat
     //THIS IS WEIRD RIGHT NOW i would try not to use it unless necessary
     public float offset;
 
-    //this helps with the syncing a little bit i think?
-    public float lastFrameTime;
+    public bool swapComplete;
+
+    //song position in the last frame. used to check if a beat was hit in between frames.
+    public float lastFramePos;
+
     void Start()
     {
         musicSource = GetComponent<AudioSource>();
@@ -55,15 +67,19 @@ public class Rhythm : MonoBehaviour
         // things from here down shouldn't be called until the song STARTS. move to separate event?
         dspSongTime = (float)AudioSettings.dspTime;
         musicSource.Play();
+        songPosition = offset * -1;
 
         Debug.Log("test!!");
     }
 
     void Update()
     {
+        lastFramePos = songPosition;
+
         //add check to see if music has started yet.
         //determine how many seconds since the song started
         songPosition = (float)(AudioSettings.dspTime - dspSongTime - offset);
+        //songPosition += Time.unscaledDeltaTime; (ticks up, but game starts 4 beats ahead?)
 
         //determine how many beats since the song started
         songPositionInBeats = songPosition / secPerBeat;
@@ -75,13 +91,28 @@ public class Rhythm : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-            accuracy();
+            isBeatHit();
         }
-        if (lastFrameTime == songPosition)
-            songPosition += Time.unscaledDeltaTime;
 
-            
-        lastFrameTime = songPosition;
+        if ((beatsToMeasures(secsToBeats(lastFramePos)) % 2 > songPositionInMeasures % 2)
+            && songPositionInMeasures > .01)
+
+        {
+            if (songBpm == 60)
+            {
+                songBpm = 120;
+                secPerBeat = 60f / songBpm;
+                beatsPerMeasure = 8;
+                swapComplete = true;
+            }
+            else
+            {
+                songBpm = 60;
+                secPerBeat = 60f / songBpm;
+                beatsPerMeasure = 4;
+                swapComplete = true;
+            }
+        }
 
     }
 
@@ -105,36 +136,58 @@ public class Rhythm : MonoBehaviour
         return measures * beatsPerMeasure;
     }
 
+    // gets a beat in the current measure. for example, if you wanted beat 3 at measure value 3.75 in 4/4,
+    // would return beat 15.
+    public float currentMeasureBeat(float beat)
+    {
+        return measuresToBeats(Mathf.Floor(songPositionInMeasures)) + beat;
+    }
 
-    // gets the distance from the closest beat in rhythmPattern, in seconds.
+    public void setBPM(float newbpm)
+    {
+        songBpm = newbpm;
+        secPerBeat = 60f / newbpm;
+    }
+
     public float accuracy()
     {
         float smallestDist = 999;
+        float adjustedBeats = songPositionInBeats + secsToBeats(calibrationOffset);
+        float adjustedMeasures = songPositionInMeasures + beatsToMeasures(secsToBeats(calibrationOffset));
+        float closestBeat = 999;
+        List<float> patternPlusNextBeat = rhythmPattern;
+        patternPlusNextBeat.Add(patternPlusNextBeat[0] + beatsPerMeasure);
 
-        // just for debug logs, we can delete if necessary
-        float closestBeat = 200;
-
-        //goes through each beat in the pattern, finds the one closest to the current point in time, and stores the distance to it
-        foreach (float b in rhythmPattern)
+        foreach (float b in patternPlusNextBeat)
         {
-            float distance = Mathf.Abs(songPositionInBeats - (Mathf.Floor(songPositionInMeasures) * beatsPerMeasure + b));            
-            if (Mathf.Abs(songPositionInBeats - (measuresToBeats(Mathf.Floor(songPositionInMeasures)) + b)) < smallestDist)
+            float beatInMeasure = currentMeasureBeat(b);
+            if(Mathf.Abs(adjustedBeats - beatInMeasure) < smallestDist)
             {
-                smallestDist = distance;
+                smallestDist = beatsToSecs(adjustedBeats - beatInMeasure);
                 closestBeat = b;
             }
         }
 
-        //checks the beat AFTER the current measure ends - otherwise it can't check for anything before the first beat of the patern
-        if (Mathf.Abs(songPositionInBeats - (measuresToBeats(Mathf.Floor(songPositionInMeasures)) + beatsPerMeasure
-            + rhythmPattern[0])) < smallestDist)
-        {
-            smallestDist = songPositionInBeats - (measuresToBeats(Mathf.Floor(songPositionInMeasures)) + beatsPerMeasure + rhythmPattern[0]);
-            closestBeat = rhythmPattern[0] + beatsPerMeasure;
-        }
+        Debug.Log("accuracy: " + smallestDist);
+        return smallestDist;
+    }
+    public bool beatPassed(float beat)
+    {
+        return beatsToSecs(beat) > lastFramePos && beatsToSecs(beat) <= songPosition;
+    }
 
-        Debug.Log("accuracy: press was " + beatsToSecs(smallestDist) + "secs from beat " + closestBeat);
-        return beatsToSecs(smallestDist);
+    public bool isBeatHit()
+    {
+        if(accuracy() <= tolerance)
+        {
+            Debug.Log("HIT!");
+            return true;
+        } else
+        {
+            Debug.Log("miss...");
+            return false;
+        }
+       
     }
 
 }
