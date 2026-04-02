@@ -5,6 +5,7 @@ using System.Linq;
 
 //using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Rhythm : MonoBehaviour
 {
@@ -42,11 +43,12 @@ public class Rhythm : MonoBehaviour
 
     //the earliness/lateness of each input
     public float calibrationOffset = 0;
+    List<float> calibrationPoints = new List<float>();
 
     /* pattern beats to track accuracy for!
     * EX: if i wanted to track beats on 1, the and of 2, and 3 for a 3/4 measure,
     * my array would look like [0 1.5 2]. BEATS START COUNTING AT ZERO !! */
-    public List<float> rhythmPattern;
+    //public List<float> rhythmPattern;
 
     //offset before first beat
     //THIS IS WEIRD RIGHT NOW i would try not to use it unless necessary
@@ -91,7 +93,23 @@ public class Rhythm : MonoBehaviour
 
         if (Input.GetKeyDown("space"))
         {
-            isBeatHit();
+            if (songPositionInMeasures > 4)
+                isBeatHit();
+            else if (songPositionInMeasures >= 4 && beatsToMeasures(secsToBeats(lastFramePos)) <= 4)
+            {
+                float total = 0;
+                foreach (float point in calibrationPoints)
+                {
+                    total += point;
+                }
+                float average = total / calibrationPoints.Count;
+                Debug.Log(total + ", " + average);
+                calibrationOffset = average;
+            }
+            else
+            {
+                calibrationPoints.Add(accuracy());
+                Debug.Log(accuracy());            }
         }
 
         if ((beatsToMeasures(secsToBeats(lastFramePos)) % 2 > songPositionInMeasures % 2)
@@ -151,6 +169,11 @@ public class Rhythm : MonoBehaviour
 
     public float accuracy()
     {
+        return beatsToSecs(songPositionInBeats - Mathf.Round(songPositionInBeats));
+    }
+
+    /*public float accuracy()
+    {
         float smallestDist = 999;
         float adjustedBeats = songPositionInBeats + secsToBeats(calibrationOffset);
         float adjustedMeasures = songPositionInMeasures + beatsToMeasures(secsToBeats(calibrationOffset));
@@ -170,7 +193,8 @@ public class Rhythm : MonoBehaviour
 
         Debug.Log("accuracy: " + smallestDist);
         return smallestDist;
-    }
+    } */
+    
     public bool beatPassed(float beat)
     {
         return beatsToSecs(beat) > lastFramePos && beatsToSecs(beat) <= songPosition;
@@ -178,7 +202,7 @@ public class Rhythm : MonoBehaviour
 
     public bool isBeatHit()
     {
-        if(accuracy() <= tolerance)
+        if(Mathf.Abs(accuracy()) <= tolerance)
         {
             Debug.Log("HIT!");
             return true;
