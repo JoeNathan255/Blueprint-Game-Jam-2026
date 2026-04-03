@@ -38,6 +38,8 @@ public class Rhythm : MonoBehaviour
     //How many seconds have passed since the song started
     public float dspSongTime;
 
+    float timeAfterLoad = -2;
+
     //an AudioSource attached to this GameObject that will play the music.
     public AudioSource musicSource;
 
@@ -61,6 +63,7 @@ public class Rhythm : MonoBehaviour
 
     void Start()
     {
+        
         musicSource = GetComponent<AudioSource>();
         secPerBeat = 60f / songBpm;
         //BeatText = GameObject.Find("BeatText").GetComponent<TMP_Text>();
@@ -76,12 +79,18 @@ public class Rhythm : MonoBehaviour
 
     void Update()
     {
+        if (timeAfterLoad == -2)
+        {
+            timeAfterLoad = Time.timeSinceLevelLoad;
+            songPosition += timeAfterLoad * -1;
+            songPosition -= offset;
+        }
         lastFramePos = songPosition;
 
         //add check to see if music has started yet.
         //determine how many seconds since the song started
-        songPosition = (float)(AudioSettings.dspTime - dspSongTime - offset);
-        //songPosition += Time.unscaledDeltaTime; (ticks up, but game starts 4 beats ahead?)
+        //songPosition = (float)(AudioSettings.dspTime - dspSongTime - offset - timeAfterLoad);
+        songPosition += Time.deltaTime;
 
         //determine how many beats since the song started
         songPositionInBeats = songPosition / secPerBeat;
@@ -94,23 +103,30 @@ public class Rhythm : MonoBehaviour
         if (Input.GetKeyDown("space"))
         {
             if (songPositionInMeasures > 4)
-                isBeatHit();
-            else if (songPositionInMeasures >= 4 && beatsToMeasures(secsToBeats(lastFramePos)) <= 4)
             {
-                float total = 0;
-                foreach (float point in calibrationPoints)
-                {
-                    total += point;
-                }
-                float average = total / calibrationPoints.Count;
-                Debug.Log(total + ", " + average);
-                calibrationOffset = average;
+                isBeatHit();
             }
             else
             {
                 calibrationPoints.Add(accuracy());
-                Debug.Log(accuracy());            }
+                Debug.Log(accuracy());
+                    float total = 0;
+                    foreach (float point in calibrationPoints)
+                    {
+                        total += point;
+                    }
+                    float average = total / calibrationPoints.Count;
+                    Debug.Log(total + ", " + average);
+                    calibrationOffset = average * -1;
+            }
         }
+
+        if (beatPassed(32))
+        {
+            Debug.Log(accuracy());
+            isBeatHit();
+        }
+        
 
         if ((beatsToMeasures(secsToBeats(lastFramePos)) % 2 > songPositionInMeasures % 2)
             && songPositionInMeasures > .01)
@@ -197,7 +213,7 @@ public class Rhythm : MonoBehaviour
     
     public bool beatPassed(float beat)
     {
-        return beatsToSecs(beat) > lastFramePos && beatsToSecs(beat) <= songPosition;
+        return (beatsToSecs(beat) > lastFramePos && beatsToSecs(beat) <= songPosition) || (lastFramePos > songPosition && Math.Abs(beatsToSecs(beat) - songPosition) <= beatsToSecs(.5f)); ;
     }
 
     public bool isBeatHit()
