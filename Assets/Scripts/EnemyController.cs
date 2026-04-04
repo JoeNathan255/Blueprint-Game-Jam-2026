@@ -11,16 +11,18 @@ public class EnemyController : MonoBehaviour
     [SerializeField] private AnimationComponent animationComponent;
     [SerializeField] private ChaseMovement chaseMovement;
     [SerializeField] private WaypointMovement waypointMovement;
+    [SerializeField] private float patrolSpeed = 15f;
+    [SerializeField] private float chaseSpeed = 40f;
 
     private MovementComponent movementComponent;
     private VisionComponent visionComponent;
-    private Vector2 inputVector;
+    private Vector2 inputVector = new Vector2();
 
     public void Start()
     {
-        SetState(State.Patrol);
         movementComponent = GetComponent<MovementComponent>();
         visionComponent = GetComponent<VisionComponent>();
+        SetState(State.Patrol);
     }
 
     public void Update()
@@ -82,8 +84,10 @@ public class EnemyController : MonoBehaviour
         switch (state)
         {
             case State.Patrol:
+                movementComponent.speed = patrolSpeed;
                 break;
             case State.Chase:
+                movementComponent.speed = chaseSpeed;
                 break;
         }
     }
