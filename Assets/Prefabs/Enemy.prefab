@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 7942505782076125788}
   - component: {fileID: 4943161570335618571}
   - component: {fileID: 4520700994625643715}
+  - component: {fileID: 7599734056624604596}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -51,8 +52,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 25
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -113,16 +114,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98228919a99d9e74880984f2bf49636f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 5899890608843471910}
-  speed: 2
   waypoints:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  visionComponent: {fileID: 4520700994625643715}
   margin: 0.1
-  isMovementSystemActive: 0
 --- !u!114 &7942505782076125788
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -135,12 +132,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 80c1597539b218e4684926ab7c24994b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 5899890608843471910}
-  speed: 8
   target: {fileID: 0}
-  visionComponent: {fileID: 4520700994625643715}
   margin: 1.5
-  isMovementSystemActive: 0
+  TargetReached:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &4943161570335618571
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -153,6 +149,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71450aef9b12d864f9af1f5857011300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  animationComponent: {fileID: 8866471710052437644}
   chaseMovement: {fileID: 7942505782076125788}
   waypointMovement: {fileID: 3239213401885543526}
 --- !u!114 &4520700994625643715
@@ -200,6 +197,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7599734056624604596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2208505417344174604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3aff044ff30f6949ab59036d2d7a6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 25
 --- !u!1 &4785838207725771688
 GameObject:
   m_ObjectHideFlags: 0
@@ -357,6 +367,7 @@ GameObject:
   - component: {fileID: 3003764153072383711}
   - component: {fileID: 8188120381430441988}
   - component: {fileID: 7830255155087240279}
+  - component: {fileID: 8866471710052437644}
   m_Layer: 0
   m_Name: EnemySprite
   m_TagString: Untagged
@@ -452,6 +463,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8866471710052437644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5899890608843471910}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81a9ff6a9c7e8f429e7143661a9c866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6486984347543042729
 GameObject:
   m_ObjectHideFlags: 0

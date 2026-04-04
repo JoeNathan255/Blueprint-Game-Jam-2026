@@ -2,17 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MovementComponent), typeof(VisionComponent))]
 public class EnemyController : MonoBehaviour
 {
     public enum State { Patrol, Chase }
     private State currentState;
 
+    [SerializeField] private AnimationComponent animationComponent;
     [SerializeField] private ChaseMovement chaseMovement;
     [SerializeField] private WaypointMovement waypointMovement;
+
+    private MovementComponent movementComponent;
+    private VisionComponent visionComponent;
+    private Vector2 inputVector;
 
     public void Start()
     {
         SetState(State.Patrol);
+        movementComponent = GetComponent<MovementComponent>();
+        visionComponent = GetComponent<VisionComponent>();
+    }
+
+    public void Update()
+    {
+        switch (currentState)
+        {
+            case State.Patrol:
+                inputVector = movementComponent.GetDirectionTo(waypointMovement.GetTargetWaypoint());
+                break;
+            case State.Chase:
+                inputVector = movementComponent.GetDirectionTo(chaseMovement.GetTarget());
+                break;
+        }
+
+        movementComponent.Move(inputVector);
+        animationComponent.UpdateAnimation(inputVector);
+        visionComponent.SetLookDirection(inputVector);
     }
 
     public State GetState()
@@ -44,10 +69,8 @@ public class EnemyController : MonoBehaviour
         switch (state)
         {
             case State.Patrol:
-                waypointMovement.isMovementSystemActive = false;
                 break;
             case State.Chase:
-                chaseMovement.isMovementSystemActive = false;
                 break;
         }
     }
@@ -59,10 +82,8 @@ public class EnemyController : MonoBehaviour
         switch (state)
         {
             case State.Patrol:
-                waypointMovement.isMovementSystemActive = true;
                 break;
             case State.Chase:
-                chaseMovement.isMovementSystemActive = true;
                 break;
         }
     }

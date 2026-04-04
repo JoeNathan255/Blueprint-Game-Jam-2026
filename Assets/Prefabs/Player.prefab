@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2155090116242185949}
   - component: {fileID: 3113661025801023344}
   - component: {fileID: 2249473774995258807}
+  - component: {fileID: 951733073937309517}
   m_Layer: 0
   m_Name: PlayerSprite
   m_TagString: Untagged
@@ -106,6 +107,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &951733073937309517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6242843690825756268}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a81a9ff6a9c7e8f429e7143661a9c866, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &7535529284675335634
 GameObject:
   m_ObjectHideFlags: 0
@@ -210,6 +223,7 @@ GameObject:
   - component: {fileID: 8551479272627441595}
   - component: {fileID: 8144680005620530970}
   - component: {fileID: 119825082748116254}
+  - component: {fileID: 2478990788039888848}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -246,8 +260,8 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 1
-  m_LinearDrag: 0
+  m_Mass: 25
+  m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 0}
@@ -308,6 +322,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbf89b710026704c93dba78d06f5d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sprite: {fileID: 6242843690825756268}
-  speed: 4
-  isMovementSystemActive: 1
+  animationComponent: {fileID: 951733073937309517}
+--- !u!114 &2478990788039888848
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9193161191087921385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3aff044ff30f6949ab59036d2d7a6c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 25
