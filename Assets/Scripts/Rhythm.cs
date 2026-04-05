@@ -2,12 +2,15 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+// temporary, for testing: (hi)
+    using Unity.VisualScripting;
 
 //using TMPro;
 using UnityEngine;
 
 public class Rhythm : MonoBehaviour
 {
+    GameObject DistanceVisualizer;
 
     //public TMP_Text BeatText;
     //public TMP_Text AccText;
@@ -74,6 +77,9 @@ public class Rhythm : MonoBehaviour
 
     void Update()
     {
+        // adding this to make sure it can handle the bpm being set anew every frame (hi)
+        setBPM(60);
+
         lastFramePos = songPosition;
 
         //add check to see if music has started yet.
@@ -94,6 +100,8 @@ public class Rhythm : MonoBehaviour
             isBeatHit();
         }
 
+        // changes bpm every 2 measures (commented out for other test)
+        /*
         if ((beatsToMeasures(secsToBeats(lastFramePos)) % 2 > songPositionInMeasures % 2)
             && songPositionInMeasures > .01)
 
@@ -113,7 +121,7 @@ public class Rhythm : MonoBehaviour
                 swapComplete = true;
             }
         }
-
+        */
     }
 
     public float secsToBeats(float secs)
@@ -169,6 +177,8 @@ public class Rhythm : MonoBehaviour
         }
 
         Debug.Log("accuracy: " + smallestDist);
+        // updates the visualizer square's position! (hi)
+        Variables.Application.Set("smallest_distance", smallestDist);
         return smallestDist;
     }
     public bool beatPassed(float beat)
