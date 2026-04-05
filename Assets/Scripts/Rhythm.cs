@@ -131,7 +131,6 @@ public class Rhythm : MonoBehaviour
         }
 
         // changes bpm every 2 measures (commented out for other test)
-        /*
         if ((beatsToMeasures(secsToBeats(lastFramePos)) % 2 > songPositionInMeasures % 2)
             && songPositionInMeasures > .01)
 
@@ -151,7 +150,6 @@ public class Rhythm : MonoBehaviour
                 swapComplete = true;
             }
         }
-        */
     }
 
     public float secsToBeats(float secs)
@@ -192,30 +190,6 @@ public class Rhythm : MonoBehaviour
         return beatsToSecs(songPositionInBeats - Mathf.Round(songPositionInBeats));
     }
 
-    /*public float accuracy()
-    {
-        float smallestDist = 999;
-        float adjustedBeats = songPositionInBeats + secsToBeats(calibrationOffset);
-        float adjustedMeasures = songPositionInMeasures + beatsToMeasures(secsToBeats(calibrationOffset));
-        float closestBeat = 999;
-        List<float> patternPlusNextBeat = rhythmPattern;
-        patternPlusNextBeat.Add(patternPlusNextBeat[0] + beatsPerMeasure);
-
-        foreach (float b in patternPlusNextBeat)
-        {
-            float beatInMeasure = currentMeasureBeat(b);
-            if(Mathf.Abs(adjustedBeats - beatInMeasure) < smallestDist)
-            {
-                smallestDist = beatsToSecs(adjustedBeats - beatInMeasure);
-                closestBeat = b;
-            }
-        }
-
-        Debug.Log("accuracy: " + smallestDist);
-        // updates the visualizer square's position! (hi)
-        Variables.Application.Set("smallest_distance", smallestDist);
-        return smallestDist;
-    } */
     
     public bool beatPassed(float beat)
     {
