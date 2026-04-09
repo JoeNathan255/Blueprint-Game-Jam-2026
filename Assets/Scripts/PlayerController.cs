@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
         float movY = Input.GetAxis("Vertical");
         Vector2 inputVec = new Vector2(movX, movY);
 
-        movementComponent.Move(inputVec.normalized);
+        movementComponent.StepMove(inputVec.normalized);
         animationComponent.UpdateAnimation(inputVec.normalized);
     }
 }

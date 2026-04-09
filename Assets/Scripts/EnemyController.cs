@@ -37,7 +37,7 @@ public class EnemyController : MonoBehaviour
                 break;
         }
 
-        movementComponent.Move(inputVector);
+        movementComponent.StepMove(inputVector);
         animationComponent.UpdateAnimation(inputVector);
         visionComponent.SetLookDirection(inputVector);
     }
@@ -84,10 +84,10 @@ public class EnemyController : MonoBehaviour
         switch (state)
         {
             case State.Patrol:
-                movementComponent.speed = patrolSpeed;
+                movementComponent.force = patrolSpeed;
                 break;
             case State.Chase:
-                movementComponent.speed = chaseSpeed;
+                movementComponent.force = chaseSpeed;
                 break;
         }
     }

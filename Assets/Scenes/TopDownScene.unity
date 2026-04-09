@@ -530,7 +530,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3aff044ff30f6949ab59036d2d7a6c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 25
+  force: 25
+  timerThreshold: 0.5
 --- !u!1 &238933327
 GameObject:
   m_ObjectHideFlags: 0
@@ -1911,6 +1912,18 @@ PrefabInstance:
       propertyPath: waypoints.Array.data[3]
       value: 
       objectReference: {fileID: 1898069075}
+    - target: {fileID: 4943161570335618571, guid: 640b58efa7886fc40b27e55ccb661175, type: 3}
+      propertyPath: chaseSpeed
+      value: 40000
+      objectReference: {fileID: 0}
+    - target: {fileID: 4943161570335618571, guid: 640b58efa7886fc40b27e55ccb661175, type: 3}
+      propertyPath: patrolSpeed
+      value: 15000
+      objectReference: {fileID: 0}
+    - target: {fileID: 7599734056624604596, guid: 640b58efa7886fc40b27e55ccb661175, type: 3}
+      propertyPath: force
+      value: 25000
+      objectReference: {fileID: 0}
     - target: {fileID: 7942505782076125788, guid: 640b58efa7886fc40b27e55ccb661175, type: 3}
       propertyPath: target
       value: 
@@ -10014,7 +10027,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3aff044ff30f6949ab59036d2d7a6c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 25
+  force: 10000
+  timerThreshold: 0.5
 --- !u!212 &3113661025577980105
 SpriteRenderer:
   m_ObjectHideFlags: 0
