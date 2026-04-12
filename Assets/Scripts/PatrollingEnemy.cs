@@ -2,26 +2,26 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MovementComponent), typeof(VisionComponent))]
-public class PatrollingEnemy : MonoBehaviour
+[RequireComponent(typeof(MovementComponent), typeof(VisionComponent), typeof(ChaseMovement))]
+[RequireComponent(typeof(WaypointMovement))]
+public class PatrollingEnemy : BaseEnemy
 {
-    public enum State { Patrol, Chase, Disabled }
-    private State currentState;
-
     [SerializeField] private AnimationComponent animationComponent;
-    [SerializeField] private ChaseMovement chaseMovement;
-    [SerializeField] private WaypointMovement waypointMovement;
     [SerializeField] private float patrolSpeed = 15000f;
     [SerializeField] private float chaseSpeed = 40000f;
 
     private MovementComponent movementComponent;
     private VisionComponent visionComponent;
+    private ChaseMovement chaseMovement;
+    private WaypointMovement waypointMovement;
     private Vector2 inputVector = new Vector2();
 
     public void Start()
     {
         movementComponent = GetComponent<MovementComponent>();
         visionComponent = GetComponent<VisionComponent>();
+        chaseMovement = GetComponent<ChaseMovement>();
+        waypointMovement = GetComponent<WaypointMovement>();
         SetState(State.Patrol);
     }
 
@@ -44,18 +44,6 @@ public class PatrollingEnemy : MonoBehaviour
         visionComponent.SetLookDirection(inputVector);
     }
 
-    public State GetState()
-    {
-        return currentState;
-    }
-
-    public void SetState(State state)
-    {
-        ExitState(currentState);
-        currentState = state;
-        EnterState(currentState);
-    }
-
     public void OnPlayerDetected()
     {
         Debug.Log("Player Detected");
@@ -71,20 +59,7 @@ public class PatrollingEnemy : MonoBehaviour
         //SetState(State.Patrol);
     }
 
-    private void ExitState(State state)
-    {
-        switch (state)
-        {
-            case State.Patrol:
-                break;
-            case State.Chase:
-                break;
-            case State.Disabled:
-                break;
-        }
-    }
-
-    private void EnterState(State state)
+    protected override void EnterState(State state)
     {
         Debug.Log($"Entering {state}");
 
@@ -97,17 +72,11 @@ public class PatrollingEnemy : MonoBehaviour
                 movementComponent.force = chaseSpeed;
                 break;
             case State.Disabled:
-                movementComponent.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-5000f, 5000f), Random.Range(-5000f, 5000f)));
+                movementComponent.AddRandomForce(5000f);
                 animationComponent.UpdateAnimation(Vector2.zero);
                 chaseMovement.Disable();
                 movementComponent.Disable();
                 break;
         }
-    }
-
-    public void Disable()
-    {
-        Debug.Log($"{this} was disabled");
-        SetState(State.Disabled);
     }
 }

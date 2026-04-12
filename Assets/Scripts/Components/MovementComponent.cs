@@ -82,4 +82,9 @@ public class MovementComponent : MonoBehaviour
     {
         isMoving = false;
     }
+
+    public void AddRandomForce(float intensity)
+    {
+        entityRigidbody.AddForce(new Vector2(Random.Range(-1f, 1f), Random.Range(-1f, 1f)) * intensity);
+    }
 }
