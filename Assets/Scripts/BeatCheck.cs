@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class BeatCheck : MonoBehaviour
 {
-    // these are fake!!!! and we will get rid of them!! aah!!!!!!!
-    float timeSinceLastBeat;
-    float timeBetweenBeats;
-    float tolerance;
+    List<float> calibrationBeats = new List<float>();
+    public float calibrationOffset;
+    BeatCount beatCount;
+    public float tolerance;
     void Start()
     {
-        
+        beatCount = GetComponent<BeatCount>();
     }
 
     // Update is called once per frame
@@ -21,6 +21,24 @@ public class BeatCheck : MonoBehaviour
 
     public bool isOnBeat()
     {
-        return timeBetweenBeats - timeSinceLastBeat < tolerance || timeSinceLastBeat <= tolerance;
+        return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset < tolerance 
+            || beatCount.timeSinceLastBeat - calibrationOffset <= tolerance;
+    }
+
+    public float calibrateInput()
+    {
+        if (Mathf.Abs(beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat) <= Mathf.Abs(beatCount.timeSinceLastBeat))
+            calibrationBeats.Add(beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat);
+        else calibrationBeats.Add(beatCount.timeSinceLastBeat);
+
+        float sum = 0f;
+        foreach(float margin in calibrationBeats)
+        {
+            sum += margin;
+        }
+
+        calibrationOffset = sum / calibrationBeats.Count;
+
+        return sum / calibrationBeats.Count;
     }
 }

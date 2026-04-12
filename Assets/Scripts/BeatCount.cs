@@ -7,6 +7,8 @@ public class BeatCount : MonoBehaviour
     public float tempo;
     public float timeSinceLastBeat;
     public float timeBetweenBeats;
+    public int beatNumber = -1;
+    float timeAfterLoad = -2;
     void Start()
     {
         
@@ -15,13 +17,18 @@ public class BeatCount : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (timeAfterLoad == -2)
+        {
+            timeAfterLoad = Time.timeSinceLevelLoad;
+            timeSinceLastBeat += timeAfterLoad * -1;
+        }
         timeSinceLastBeat += Time.deltaTime;
         timeBetweenBeats = 60f / tempo;
         if (timeSinceLastBeat >= timeBetweenBeats)
         {
             Debug.Log("Beat!");
-            timeSinceLastBeat = 0;
-            // maybe this is what we want though? timeSinceLastBeat -= timeBetweenBeats;
+            timeSinceLastBeat -= timeBetweenBeats;
+            beatNumber += 1;
         }
     }
 }

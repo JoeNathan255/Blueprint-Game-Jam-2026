@@ -111,16 +111,7 @@ public class Rhythm : MonoBehaviour
             }
             else
             {
-                calibrationPoints.Add(accuracy());
-                Debug.Log(accuracy());
-                    float total = 0;
-                    foreach (float point in calibrationPoints)
-                    {
-                        total += point;
-                    }
-                    float average = total / calibrationPoints.Count;
-                    Debug.Log(total + ", " + average);
-                    calibrationOffset = average * -1;
+                calibrateBeat();
             }
         }
 
@@ -190,7 +181,21 @@ public class Rhythm : MonoBehaviour
         return beatsToSecs(songPositionInBeats - Mathf.Round(songPositionInBeats));
     }
 
-    
+    // gets the accuracy of the beat input, takes the average of all thse accuracies and sets the calibration value to that
+    public void calibrateBeat()
+    {
+        calibrationPoints.Add(accuracy());
+        Debug.Log(accuracy());
+        float total = 0;
+        foreach (float point in calibrationPoints)
+        {
+            total += point;
+        }
+        float average = total / calibrationPoints.Count;
+        Debug.Log(total + ", " + average);
+        calibrationOffset = average * -1;
+    }
+
     public bool beatPassed(float beat)
     {
         return (beatsToSecs(beat) > lastFramePos && beatsToSecs(beat) <= songPosition) || (lastFramePos > songPosition && Math.Abs(beatsToSecs(beat) - songPosition) <= beatsToSecs(.5f)); ;
