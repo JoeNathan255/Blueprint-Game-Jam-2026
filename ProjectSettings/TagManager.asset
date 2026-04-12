@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - beat tag
+  - Enemy
   layers:
   - Default
   - TransparentFX
@@ -45,12 +46,9 @@ TagManager:
   - name: Floor
     uniqueID: 1312019995
     locked: 0
-  - name: WalkBehind
+  - name: Collision
     uniqueID: 2764488017
     locked: 0
-  - name: Player
-    uniqueID: 4081397995
-    locked: 0
-  - name: WalkInFront
-    uniqueID: 2375679471
+  - name: Debug
+    uniqueID: 267771993
     locked: 0
