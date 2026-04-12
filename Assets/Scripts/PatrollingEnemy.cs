@@ -3,16 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MovementComponent), typeof(VisionComponent))]
-public class EnemyController : MonoBehaviour
+public class PatrollingEnemy : MonoBehaviour
 {
-    public enum State { Patrol, Chase }
+    public enum State { Patrol, Chase, Disabled }
     private State currentState;
 
     [SerializeField] private AnimationComponent animationComponent;
     [SerializeField] private ChaseMovement chaseMovement;
     [SerializeField] private WaypointMovement waypointMovement;
-    [SerializeField] private float patrolSpeed = 15f;
-    [SerializeField] private float chaseSpeed = 40f;
+    [SerializeField] private float patrolSpeed = 15000f;
+    [SerializeField] private float chaseSpeed = 40000f;
 
     private MovementComponent movementComponent;
     private VisionComponent visionComponent;
@@ -35,6 +35,8 @@ public class EnemyController : MonoBehaviour
             case State.Chase:
                 inputVector = movementComponent.GetDirectionTo(chaseMovement.GetTarget());
                 break;
+            case State.Disabled:
+                return;
         }
 
         movementComponent.StepMove(inputVector);
@@ -57,7 +59,10 @@ public class EnemyController : MonoBehaviour
     public void OnPlayerDetected()
     {
         Debug.Log("Player Detected");
-        SetState(State.Chase);
+        if (currentState == State.Patrol)
+        {
+            SetState(State.Chase);
+        }
     }
 
     public void OnPlayerLost()
@@ -74,6 +79,8 @@ public class EnemyController : MonoBehaviour
                 break;
             case State.Chase:
                 break;
+            case State.Disabled:
+                break;
         }
     }
 
@@ -89,6 +96,18 @@ public class EnemyController : MonoBehaviour
             case State.Chase:
                 movementComponent.force = chaseSpeed;
                 break;
+            case State.Disabled:
+                movementComponent.GetComponent<Rigidbody2D>().AddForce(new Vector2(Random.Range(-5000f, 5000f), Random.Range(-5000f, 5000f)));
+                animationComponent.UpdateAnimation(Vector2.zero);
+                chaseMovement.Disable();
+                movementComponent.Disable();
+                break;
         }
+    }
+
+    public void Disable()
+    {
+        Debug.Log($"{this} was disabled");
+        SetState(State.Disabled);
     }
 }

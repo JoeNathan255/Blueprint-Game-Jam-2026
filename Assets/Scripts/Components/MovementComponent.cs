@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
@@ -17,6 +18,7 @@ public class MovementComponent : MonoBehaviour
     private bool oneShot = true;
     private float firstTimerThreshold;
     private float holdTimerThreshold;
+    private bool active = true;
 
 
     void Start()
@@ -29,6 +31,8 @@ public class MovementComponent : MonoBehaviour
 
     public void Move(Vector2 normalizedInputVec)
     {
+        if (!active) {return;}
+
         entityRigidbody.AddForce(normalizedInputVec * force * Time.deltaTime);
         //entityRigidbody.velocity = normalizedInputVec * speed;
 
@@ -44,6 +48,8 @@ public class MovementComponent : MonoBehaviour
 
     public void StepMove(Vector2 normalizedInputVec)
     {
+        if (!active) {return;}
+
         if (oneShot || timer >= timerThreshold)
         {
             timerThreshold = oneShot ? firstTimerThreshold : holdTimerThreshold;
@@ -70,5 +76,10 @@ public class MovementComponent : MonoBehaviour
     {
         Vector2 direction = target.transform.position - this.transform.position;
         return direction.normalized;
+    }
+
+    public void Disable()
+    {
+        isMoving = false;
     }
 }

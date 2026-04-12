@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3621731448928573353}
   - component: {fileID: 3239213401885543526}
   - component: {fileID: 7942505782076125788}
-  - component: {fileID: 4943161570335618571}
   - component: {fileID: 4520700994625643715}
   - component: {fileID: 7599734056624604596}
+  - component: {fileID: 1866406957682150897}
   m_Layer: 0
   m_Name: Enemy
   m_TagString: Enemy
@@ -137,21 +137,6 @@ MonoBehaviour:
   TargetReached:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &4943161570335618571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2208505417344174604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 71450aef9b12d864f9af1f5857011300, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  animationComponent: {fileID: 8866471710052437644}
-  chaseMovement: {fileID: 7942505782076125788}
-  waypointMovement: {fileID: 3239213401885543526}
 --- !u!114 &4520700994625643715
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,8 +155,8 @@ MonoBehaviour:
   ObjectDetected:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4943161570335618571}
-        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+      - m_Target: {fileID: 1866406957682150897}
+        m_TargetAssemblyTypeName: PatrollingEnemy, Assembly-CSharp
         m_MethodName: OnPlayerDetected
         m_Mode: 1
         m_Arguments:
@@ -185,8 +170,8 @@ MonoBehaviour:
   ObjectLost:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4943161570335618571}
-        m_TargetAssemblyTypeName: EnemyController, Assembly-CSharp
+      - m_Target: {fileID: 1866406957682150897}
+        m_TargetAssemblyTypeName: PatrollingEnemy, Assembly-CSharp
         m_MethodName: OnPlayerLost
         m_Mode: 1
         m_Arguments:
@@ -209,7 +194,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d3aff044ff30f6949ab59036d2d7a6c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 25
+  force: 25000
+  timerThreshold: 0.5
+--- !u!114 &1866406957682150897
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2208505417344174604}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 71450aef9b12d864f9af1f5857011300, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animationComponent: {fileID: 8866471710052437644}
+  chaseMovement: {fileID: 7942505782076125788}
+  waypointMovement: {fileID: 3239213401885543526}
+  patrolSpeed: 15000
+  chaseSpeed: 40000
 --- !u!1 &4785838207725771688
 GameObject:
   m_ObjectHideFlags: 0

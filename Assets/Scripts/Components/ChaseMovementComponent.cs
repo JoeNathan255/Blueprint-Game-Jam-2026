@@ -7,14 +7,15 @@ public class ChaseMovement : MonoBehaviour
 {
     [SerializeField] private GameObject target;
     [SerializeField] private float margin = 2f;
-
+    
     public UnityEvent TargetReached;
+    private bool active = true;
 
     private bool oneShot = true;
 
     void Update()
     {
-        if (IsTargetReached())
+        if (IsTargetReached() && active)
         {
             if (oneShot)
             {
@@ -22,8 +23,6 @@ public class ChaseMovement : MonoBehaviour
                 TargetReached?.Invoke();
             }
             oneShot = false;
-
-            //GlobalEvents.BroadcastGameOver();
         }
         else
         {
@@ -39,5 +38,10 @@ public class ChaseMovement : MonoBehaviour
     private bool IsTargetReached()
     {
         return Vector2.Distance(transform.position, target.transform.position) < margin;
+    }
+
+    public void Disable()
+    {
+        active = false;
     }
 }
