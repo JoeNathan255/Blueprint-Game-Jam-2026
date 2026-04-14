@@ -18,6 +18,11 @@ public class PlayerMovement : MonoBehaviour
         float movY = Input.GetAxis("Vertical");
         Vector2 inputVec = new Vector2(movX, movY);
 
+        if (inputVec.magnitude > 0)
+        {
+            GlobalEvents.BroadcastPlayerInput();
+        }
+
         movementComponent.StepMove(inputVec.normalized);
         animationComponent.UpdateAnimation(inputVec.normalized);
     }

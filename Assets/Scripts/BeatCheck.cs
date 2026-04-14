@@ -41,4 +41,12 @@ public class BeatCheck : MonoBehaviour
 
         return sum / calibrationBeats.Count;
     }
+
+    public float accuracy()
+    {
+        if (Mathf.Abs(beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset)
+            <= Mathf.Abs(beatCount.timeSinceLastBeat - calibrationOffset))
+            return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat;
+        else return beatCount.timeSinceLastBeat;
+    }
 }
