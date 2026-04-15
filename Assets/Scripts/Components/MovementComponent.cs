@@ -31,7 +31,7 @@ public class MovementComponent : MonoBehaviour
 
     public void Move(Vector2 normalizedInputVec)
     {
-        if (!active) {return;}
+        if (!active) { return; }
 
         entityRigidbody.AddForce(normalizedInputVec * force * Time.deltaTime);
         //entityRigidbody.velocity = normalizedInputVec * speed;
@@ -48,7 +48,12 @@ public class MovementComponent : MonoBehaviour
 
     public void StepMove(Vector2 normalizedInputVec)
     {
-        if (!active) {return;}
+        if (!active) { return; }
+
+        if (timer >= timerThreshold && GetComponent<PlayerController>() != null)
+        {
+            GlobalEvents.Instance.OnContinuedMovement();
+        }
 
         if (oneShot || timer >= timerThreshold)
         {

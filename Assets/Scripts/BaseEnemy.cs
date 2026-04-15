@@ -2,12 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(MovementComponent), typeof(ChaseMovement))]
 public abstract class BaseEnemy : MonoBehaviour
 {
     public enum State { Idle, Patrol, Chase, Disabled }
     protected State currentState;
-    [SerializeField] protected float threatThreshold;
-    protected float currentThreat;
+    protected State defaultState;
+    protected MovementComponent movementComponent;
+    protected ChaseMovement chaseMovement;
 
     public void Disable()
     {
@@ -29,11 +31,21 @@ public abstract class BaseEnemy : MonoBehaviour
 
     protected virtual void ExitState(State state)
     {
-        
+
     }
 
     protected virtual void EnterState(State state)
     {
-        
+
+    }
+
+    public virtual void AggroPlayer()
+    {
+        SetState(State.Chase);
+    }
+
+    public virtual void DeaggroPlayer()
+    {
+        SetState(defaultState);
     }
 }

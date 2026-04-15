@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MovementComponent))]
-public class PlayerMovement : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
     [SerializeField] private AnimationComponent animationComponent;
 
@@ -18,7 +18,7 @@ public class PlayerMovement : MonoBehaviour
         float movY = Input.GetAxis("Vertical");
         Vector2 inputVec = new Vector2(movX, movY);
 
-        if (inputVec.magnitude > 0)
+        if (Input.anyKeyDown)
         {
             GlobalEvents.BroadcastPlayerInput();
         }

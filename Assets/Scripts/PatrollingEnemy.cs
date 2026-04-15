@@ -2,17 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MovementComponent), typeof(VisionComponent), typeof(ChaseMovement))]
-[RequireComponent(typeof(WaypointMovement))]
+[RequireComponent(typeof(WaypointMovement), typeof(VisionComponent))]
 public class PatrollingEnemy : BaseEnemy
 {
     [SerializeField] private AnimationComponent animationComponent;
     [SerializeField] private float patrolSpeed = 15000f;
     [SerializeField] private float chaseSpeed = 40000f;
 
-    private MovementComponent movementComponent;
     private VisionComponent visionComponent;
-    private ChaseMovement chaseMovement;
     private WaypointMovement waypointMovement;
     private Vector2 inputVector = new Vector2();
 

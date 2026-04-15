@@ -15,6 +15,7 @@ public class GlobalEvents : MonoBehaviour
     public static GlobalEvents Instance;
 
     public UnityEvent PlayerInput;
+    private List<Level> levels = new List<Level>();
 
     public static void BroadcastGameOver()
     {
@@ -40,12 +41,43 @@ public class GlobalEvents : MonoBehaviour
 
     public void OnPlayerInput()
     {
-        //Debug.Log("Accuracy: " + beatCheck.accuracy().ToString("0.##") + (beatCheck.isOnBeat() ? "HIT!" : "miss..."));
-        if (!beatCheck.isOnBeat())
+        Debug.Log("Accuracy: " + beatCheck.accuracy().ToString("0.##") + (beatCheck.isOnBeat() ? "HIT!" : "miss..."));
+        if (beatCheck.isOnBeat())
         {
-            Debug.Log("ATTACK");
+            foreach (Level level in levels)
+            {
+                if (level.isPlayerInLevel)
+                {
+                    level.OnPlayerOnBeat();
+                }
+            }
+        }
+        else
+        {
+            //Debug.Log("ATTACK");
+            foreach (Level level in levels)
+            {
+                if (level.isPlayerInLevel)
+                {
+                    level.OnPlayerOffBeat();
+                }
+            }
         }
     }
 
+    public void OnContinuedMovement()
+    {
+        foreach (Level level in levels)
+            {
+                if (level.isPlayerInLevel)
+                {
+                    level.OnPlayerOffBeat();
+                }
+            }
+    }
 
+    public void RegisterLevel(Level level)
+    {
+        levels.Add(level);
+    }
 }
