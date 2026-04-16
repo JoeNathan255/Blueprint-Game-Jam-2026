@@ -39,12 +39,12 @@ public abstract class BaseEnemy : MonoBehaviour
 
     }
 
-    public virtual void AggroPlayer()
+    public virtual void AttackTarget()
     {
         SetState(State.Chase);
     }
 
-    public virtual void DeaggroPlayer()
+    public virtual void StopAttackingTarget()
     {
         SetState(defaultState);
     }

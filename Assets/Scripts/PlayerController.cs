@@ -1,11 +1,12 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MovementComponent))]
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IKillable
 {
     [SerializeField] private AnimationComponent animationComponent;
 
     private MovementComponent movementComponent;
+    private bool isMobile = true;
 
     void Start()
     {
@@ -14,6 +15,11 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!isMobile)
+        {
+            return;
+        }
+
         float movX = Input.GetAxis("Horizontal");
         float movY = Input.GetAxis("Vertical");
         Vector2 inputVec = new Vector2(movX, movY);
@@ -25,5 +31,21 @@ public class PlayerController : MonoBehaviour
 
         movementComponent.StepMove(inputVec.normalized);
         animationComponent.UpdateAnimation(inputVec.normalized);
+    }
+
+    public void SetImmobile()
+    {
+        animationComponent.UpdateAnimation(Vector2.zero);
+        isMobile = false;
+    }
+
+    public void SetMobile()
+    {
+        isMobile = true;
+    }
+
+    public void Kill()
+    {
+        GlobalEvents.BroadcastGameOver();
     }
 }

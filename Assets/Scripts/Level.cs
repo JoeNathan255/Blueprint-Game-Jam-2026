@@ -22,7 +22,7 @@ public class Level : MonoBehaviour
         foreach (BaseEnemy enemy in levelEnemies)
         {
             //Debug.Log($"{enemy} aggro player");
-            enemy.AggroPlayer();
+            enemy.AttackTarget();
         }
     }
 
@@ -31,7 +31,7 @@ public class Level : MonoBehaviour
         foreach (BaseEnemy enemy in levelEnemies)
         {
             //Debug.Log($"{enemy} aggro player");
-            enemy.DeaggroPlayer();
+            enemy.StopAttackingTarget();
         }
     }
 }

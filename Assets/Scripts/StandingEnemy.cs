@@ -41,6 +41,7 @@ public class StandingEnemy : BaseEnemy
         switch (state)
         {
             case State.Idle:
+                animationComponent.UpdateAnimation(Vector2.zero);
                 movementComponent.Disable();
                 chaseMovement.Disable();
                 break;
