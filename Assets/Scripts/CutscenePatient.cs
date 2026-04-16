@@ -27,7 +27,7 @@ public class CutscenePatient : MonoBehaviour, IKillable
         {
             return;
         }
-        
+
         inputVector = movementComponent.GetDirectionTo(waypointMovement.GetTargetWaypoint());
         movementComponent.StepMove(inputVector);
         animationComponent.UpdateAnimation(inputVector);
@@ -40,8 +40,10 @@ public class CutscenePatient : MonoBehaviour, IKillable
 
     public void Kill()
     {
+        Debug.Log("Patient Killed");
         animationComponent.UpdateAnimation(Vector2.zero);
         isAlive = false;
         OnCutscenePatientKilled?.Invoke();
+        Destroy(gameObject, 1.0f);
     }
 }

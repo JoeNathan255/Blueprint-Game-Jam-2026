@@ -10,7 +10,6 @@ public class ChaseMovement : MonoBehaviour
 
     public UnityEvent TargetReached;
     private bool active = true;
-
     private bool oneShot = true;
 
     void Update()
@@ -19,10 +18,11 @@ public class ChaseMovement : MonoBehaviour
         {
             if (oneShot)
             {
-                Debug.Log("Target Reached!");
+                Debug.Log("Target Reached oneshot!");
 
                 if (target.GetComponent<IKillable>() != null)
                 {
+                    Debug.Log("Kill");
                     target.GetComponent<IKillable>().Kill();
                 }
                 if (GetComponent<BaseEnemy>() != null)
@@ -57,6 +57,7 @@ public class ChaseMovement : MonoBehaviour
 
     public void SetTarget(GameObject newTarget)
     {
-        target = newTarget;
+        target = newTarget.gameObject;
+        Debug.Log($"Targeting {target}, which is {Vector2.Distance(transform.position, target.transform.position)} units away from this");
     }
 }

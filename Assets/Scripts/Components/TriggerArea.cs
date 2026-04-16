@@ -19,8 +19,8 @@ public class TriggerArea : MonoBehaviour
         OnExit?.Invoke(collider.gameObject);
     }
 
-    public void Destroy()
+    public void DestroyArea()
     {
-        Destroy();
+        Destroy(gameObject);
     }
 }

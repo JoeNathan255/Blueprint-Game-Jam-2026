@@ -5,7 +5,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     [SerializeField] public BaseEnemy[] levelEnemies;
-    [SerializeField] public bool isPlayerInLevel;
+    [SerializeField] private bool isPlayerInLevel;
 
     void Start()
     {
@@ -19,6 +19,8 @@ public class Level : MonoBehaviour
 
     public void OnPlayerOffBeat()
     {
+        if (!isPlayerInLevel) { return; }
+
         foreach (BaseEnemy enemy in levelEnemies)
         {
             //Debug.Log($"{enemy} aggro player");
@@ -28,10 +30,17 @@ public class Level : MonoBehaviour
 
     public void OnPlayerOnBeat()
     {
+        if (!isPlayerInLevel) { return; }
+
         foreach (BaseEnemy enemy in levelEnemies)
         {
             //Debug.Log($"{enemy} aggro player");
             enemy.StopAttackingTarget();
         }
+    }
+
+    public void SetIsPlayerInLevel(bool isplayerInLevel)
+    {
+        isPlayerInLevel = isplayerInLevel;
     }
 }

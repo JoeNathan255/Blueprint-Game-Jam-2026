@@ -46,6 +46,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
     public void Kill()
     {
+        Debug.Log("Player Killed");
         GlobalEvents.BroadcastGameOver();
     }
 }

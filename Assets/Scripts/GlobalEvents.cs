@@ -46,10 +46,7 @@ public class GlobalEvents : MonoBehaviour
         {
             foreach (Level level in levels)
             {
-                if (level.isPlayerInLevel)
-                {
-                    level.OnPlayerOnBeat();
-                }
+                level.OnPlayerOnBeat();
             }
         }
         else
@@ -57,10 +54,7 @@ public class GlobalEvents : MonoBehaviour
             //Debug.Log("ATTACK");
             foreach (Level level in levels)
             {
-                if (level.isPlayerInLevel)
-                {
-                    level.OnPlayerOffBeat();
-                }
+                level.OnPlayerOffBeat();
             }
         }
     }
@@ -68,12 +62,9 @@ public class GlobalEvents : MonoBehaviour
     public void OnContinuedMovement()
     {
         foreach (Level level in levels)
-            {
-                if (level.isPlayerInLevel)
-                {
-                    level.OnPlayerOffBeat();
-                }
-            }
+        {
+            level.OnPlayerOffBeat();
+        }
     }
 
     public void RegisterLevel(Level level)
