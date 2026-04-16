@@ -14,7 +14,7 @@ public class Level : MonoBehaviour
 
     void Update()
     {
-        
+
     }
 
     public void OnPlayerOffBeat()
@@ -42,5 +42,12 @@ public class Level : MonoBehaviour
     public void SetIsPlayerInLevel(bool isplayerInLevel)
     {
         isPlayerInLevel = isplayerInLevel;
+        if (!isPlayerInLevel)
+        {
+            foreach (BaseEnemy enemy in levelEnemies)
+            {
+                enemy.StopAttackingTarget();
+            }
+        }
     }
 }

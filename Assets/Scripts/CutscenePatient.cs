@@ -9,6 +9,7 @@ public class CutscenePatient : MonoBehaviour, IKillable
     public UnityEvent OnCutscenePatientKilled;
 
     [SerializeField] private AnimationComponent animationComponent;
+    [SerializeField] private float destroyAfterKillTime = 3.0f;
     private WaypointMovement waypointMovement;
     private MovementComponent movementComponent;
     private Vector2 inputVector = new Vector2();
@@ -44,6 +45,6 @@ public class CutscenePatient : MonoBehaviour, IKillable
         animationComponent.UpdateAnimation(Vector2.zero);
         isAlive = false;
         OnCutscenePatientKilled?.Invoke();
-        Destroy(gameObject, 1.0f);
+        Destroy(gameObject, destroyAfterKillTime);
     }
 }
