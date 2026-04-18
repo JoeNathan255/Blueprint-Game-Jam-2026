@@ -58,6 +58,6 @@ public class ChaseMovement : MonoBehaviour
     public void SetTarget(GameObject newTarget)
     {
         target = newTarget.gameObject;
-        Debug.Log($"Targeting {target}, which is {Vector2.Distance(transform.position, target.transform.position)} units away from this");
+        //Debug.Log($"Targeting {target}, which is {Vector2.Distance(transform.position, target.transform.position)} units away from this");
     }
 }

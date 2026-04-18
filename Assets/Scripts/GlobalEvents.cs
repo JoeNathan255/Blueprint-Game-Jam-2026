@@ -16,6 +16,7 @@ public class GlobalEvents : MonoBehaviour
 
     public UnityEvent PlayerInput;
     private List<Level> levels = new List<Level>();
+    private float beatTime = 0;
 
     public static void BroadcastGameOver()
     {
@@ -42,6 +43,7 @@ public class GlobalEvents : MonoBehaviour
     public void OnPlayerInput()
     {
         Debug.Log("Accuracy: " + beatCheck.accuracy().ToString("0.##") + (beatCheck.isOnBeat() ? "HIT!" : "miss..."));
+        //Debug.Log("Accuracy: " + Mathf.Abs(beatTime - Time.timeSinceLevelLoad));
         if (beatCheck.isOnBeat())
         {
             foreach (Level level in levels)
@@ -70,5 +72,12 @@ public class GlobalEvents : MonoBehaviour
     public void RegisterLevel(Level level)
     {
         levels.Add(level);
+    }
+
+    public void OnBeat()
+    {
+        Debug.Log("Beat");
+        beatTime = Time.timeSinceLevelLoad;
+        beatCount.tempo += 1;
     }
 }
