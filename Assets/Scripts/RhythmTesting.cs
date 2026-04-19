@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+
 
 public class RhythmTesting : MonoBehaviour
 {
@@ -11,14 +13,27 @@ public class RhythmTesting : MonoBehaviour
 
     // this one is just stuff for testing and should not be used in the actual game 
 
+
+    void OnEnable()
+    {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        beatCounter.counting = true;
+    }
+
     void Start()
     {
         beatChecker = GetComponent<BeatCheck>();
         beatCounter = GetComponent<BeatCount>();
+        Debug.Log(BeatCheck.calibrationOffset);
+        beatCounter.playBeats();
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
         if(Input.GetKeyDown("space"))
         {
@@ -28,14 +43,14 @@ public class RhythmTesting : MonoBehaviour
         if(Input.GetKeyDown("left shift"))
         {
             beatChecker.calibrateInput();
-            Debug.Log("Calibrated! Tolerance: " + beatChecker.calibrationOffset);
+            Debug.Log("Calibrated! Tolerance: " + BeatCheck.calibrationOffset);
         }
     }
 
     public float accuracy()
     {
-        if (Mathf.Abs(beatCounter.timeBetweenBeats - beatCounter.timeSinceLastBeat - beatChecker.calibrationOffset)
-            <= Mathf.Abs(beatCounter.timeSinceLastBeat - beatChecker.calibrationOffset))
+        if (Mathf.Abs(beatCounter.timeBetweenBeats - beatCounter.timeSinceLastBeat - BeatCheck.calibrationOffset)
+            <= Mathf.Abs(beatCounter.timeSinceLastBeat - BeatCheck.calibrationOffset))
             return beatCounter.timeBetweenBeats - beatCounter.timeSinceLastBeat;
         else return beatCounter.timeSinceLastBeat;
     }

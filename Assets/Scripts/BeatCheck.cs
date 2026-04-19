@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class BeatCheck : MonoBehaviour
 {
-    List<float> calibrationBeats = new List<float>();
-    public float calibrationOffset;
+    static public List<float> calibrationBeats = new List<float>();
+    static public float calibrationOffset;
     BeatCount beatCount;
     public float tolerance;
     void Start()

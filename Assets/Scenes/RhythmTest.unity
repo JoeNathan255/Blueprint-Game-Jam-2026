@@ -158,6 +158,7 @@ MonoBehaviour:
   timeSinceLastBeat: 0
   timeBetweenBeats: 0
   beatNumber: -1
+  counting: 0
 --- !u!114 &161927688
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,7 +171,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4d3e3a245bb3140b8344ab77e80acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  calibrationOffset: 0
   tolerance: 0.25
 --- !u!4 &161927689
 Transform:
@@ -211,7 +211,7 @@ AudioSource:
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 617ae492d6dc5a94b9592a6ebf525c58, type: 3}
-  m_PlayOnAwake: 1
+  m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
   Loop: 1
