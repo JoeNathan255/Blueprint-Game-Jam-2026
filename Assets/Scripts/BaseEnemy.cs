@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MovementComponent), typeof(ChaseMovement))]
-public abstract class BaseEnemy : MonoBehaviour
+public abstract class BaseEnemy : MonoBehaviour, IKillable
 {
     public enum State { Idle, Patrol, Chase, Disabled }
+    public float tempoIncreaseStrength = 10;
+    public float tempoIncreaseRadius = 5;
     protected State currentState;
     protected State defaultState;
     protected MovementComponent movementComponent;
     protected ChaseMovement chaseMovement;
+    protected bool alive = true;
 
-    public void Disable()
+    public void Kill()
     {
         Debug.Log($"{this} was disabled");
         SetState(State.Disabled);
+        alive = false;
     }
 
     public State GetState()
@@ -41,11 +45,23 @@ public abstract class BaseEnemy : MonoBehaviour
 
     public virtual void AttackTarget()
     {
+        if (!alive) { return; }
         SetState(State.Chase);
     }
 
     public virtual void StopAttackingTarget()
     {
+        if (!alive) { return; }
         SetState(defaultState);
+    }
+
+    protected virtual void TempoIncreaseCheck()
+    {
+        if (!alive) { return; }
+
+        if (Vector2.Distance(transform.position, GlobalEvents.Instance.player.transform.position) < tempoIncreaseRadius)
+        {
+            GlobalEvents.Instance.SetNextTempoIncrease(tempoIncreaseStrength);
+        }
     }
 }

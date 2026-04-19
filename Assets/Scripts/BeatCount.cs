@@ -13,7 +13,7 @@ public class BeatCount : MonoBehaviour
     public int beatNumber = -1;
     float timeAfterLoad = -2;
 
-    void Update(){
+    void FixedUpdate() {
 
         if (timeAfterLoad == -2)
         {
@@ -21,7 +21,7 @@ public class BeatCount : MonoBehaviour
             timeSinceLastBeat += timeAfterLoad * -1;
         }
         
-        timeSinceLastBeat += Time.smoothDeltaTime;
+        timeSinceLastBeat += Time.fixedDeltaTime;
         timeBetweenBeats = 60f / tempo;
         if (timeSinceLastBeat >= timeBetweenBeats)
         {

@@ -2,21 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(WaypointMovement), typeof(VisionComponent))]
+[RequireComponent(typeof(WaypointMovement))]
 public class PatrollingEnemy : BaseEnemy
 {
     [SerializeField] private AnimationComponent animationComponent;
-    [SerializeField] private float patrolSpeed = 15000f;
-    [SerializeField] private float chaseSpeed = 40000f;
+    [SerializeField] private float patrolSpeed = 5000f;
+    [SerializeField] private float chaseSpeed = 20000f;
 
-    private VisionComponent visionComponent;
     private WaypointMovement waypointMovement;
     private Vector2 inputVector = new Vector2();
 
     public void Start()
     {
+        defaultState = State.Patrol;
         movementComponent = GetComponent<MovementComponent>();
-        visionComponent = GetComponent<VisionComponent>();
         chaseMovement = GetComponent<ChaseMovement>();
         waypointMovement = GetComponent<WaypointMovement>();
         SetState(State.Patrol);
@@ -38,22 +37,6 @@ public class PatrollingEnemy : BaseEnemy
 
         movementComponent.StepMove(inputVector);
         animationComponent.UpdateAnimation(inputVector);
-        visionComponent.SetLookDirection(inputVector);
-    }
-
-    public void OnPlayerDetected()
-    {
-        Debug.Log("Player Detected");
-        if (currentState == State.Patrol)
-        {
-            SetState(State.Chase);
-        }
-    }
-
-    public void OnPlayerLost()
-    {
-        //Debug.Log("Player Lost");
-        //SetState(State.Patrol);
     }
 
     protected override void EnterState(State state)

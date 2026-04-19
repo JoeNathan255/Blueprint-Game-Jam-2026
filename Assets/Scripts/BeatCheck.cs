@@ -21,9 +21,9 @@ public class BeatCheck : MonoBehaviour
 
     public bool isOnBeat()
     {
-        // return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset < tolerance 
-        //     || beatCount.timeSinceLastBeat - calibrationOffset <= tolerance;
-        return beatCount.timeSinceLastBeat < tolerance || beatCount.timeSinceLastBeat > beatCount.timeBetweenBeats - tolerance;
+        return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset < tolerance 
+            || beatCount.timeSinceLastBeat - calibrationOffset <= tolerance;
+        //return beatCount.timeSinceLastBeat < tolerance || beatCount.timeSinceLastBeat > beatCount.timeBetweenBeats - tolerance;
     }
 
     public float calibrateInput()
@@ -45,15 +45,15 @@ public class BeatCheck : MonoBehaviour
 
     public float accuracy()
     {
-        // if (Mathf.Abs(beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset) <= Mathf.Abs(beatCount.timeSinceLastBeat - calibrationOffset))
-        // {
-        //     return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat;
-        // }
-        // else
-        // {
-        //     return beatCount.timeSinceLastBeat;
-        // } 
+        if (Mathf.Abs(beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset) <= Mathf.Abs(beatCount.timeSinceLastBeat - calibrationOffset))
+        {
+            return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat;
+        }
+        else
+        {
+            return beatCount.timeSinceLastBeat;
+        } 
 
-        return Mathf.Abs(beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset);
+        //return Mathf.Abs(beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset);
     }
 }

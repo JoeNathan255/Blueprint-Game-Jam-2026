@@ -15,6 +15,7 @@ public class StandingEnemy : BaseEnemy
         defaultState = State.Idle;
         movementComponent = GetComponent<MovementComponent>();
         chaseMovement = GetComponent<ChaseMovement>();
+        SetState(State.Idle);
     }
 
     void Update()
@@ -22,6 +23,7 @@ public class StandingEnemy : BaseEnemy
         switch (currentState)
         {
             case State.Chase:
+                TempoIncreaseCheck();
                 inputVector = movementComponent.GetDirectionTo(chaseMovement.GetTarget());
                 break;
             case State.Idle:
