@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class BeatCount : MonoBehaviour
 {
+    public UnityEvent OnBeat;
     public float tempo;
     public float timeSinceLastBeat;
     public float timeBetweenBeats;
@@ -36,6 +39,7 @@ public class BeatCount : MonoBehaviour
             if (timeSinceLastBeat >= timeBetweenBeats)
             {
                 Debug.Log("Beat!");
+                OnBeat?.Invoke();
                 timeSinceLastBeat -= timeBetweenBeats;
                 beatNumber += 1;
             }
