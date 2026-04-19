@@ -18,6 +18,7 @@ public class CalibrationController : MonoBehaviour
     Button repeat4;
     BeatCheck beatChecker;
     BeatCount beatCounter;
+    Image visualizer3;
 
     enum MenuStage // this is how i'm gonna track where in the menu we are. each one corresponds to different text/buttons/etc activated.
     {
@@ -39,6 +40,7 @@ public class CalibrationController : MonoBehaviour
         repeat4 = GameObject.Find("Repeat4").GetComponent<Button>();
         beatChecker = GameObject.Find("Conductor").GetComponent<BeatCheck>();
         beatCounter = GameObject.Find("Conductor").GetComponent<BeatCount>();
+        visualizer3 = GameObject.Find("Visualizer3").GetComponent<Image>();
     }
 
     void Update()
@@ -53,6 +55,7 @@ public class CalibrationController : MonoBehaviour
                 text4.enabled = false;
                 accept4.enabled = false;
                 repeat4.enabled = false;
+                visualizer3.enabled = false;
                 accept4.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
                 repeat4.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
                 if (Input.anyKeyDown)
@@ -67,6 +70,8 @@ public class CalibrationController : MonoBehaviour
                 text4.enabled = false;
                 accept4.enabled = false;
                 repeat4.enabled = false;
+                visualizer3.enabled = false;
+
                 accept4.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
                 repeat4.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
                 if (Input.anyKeyDown)
@@ -81,6 +86,8 @@ public class CalibrationController : MonoBehaviour
                 text4.enabled = false;
                 accept4.enabled = false;
                 repeat4.enabled = false;
+                visualizer3.enabled = false;
+
                 accept4.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
                 repeat4.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
                 if (Input.anyKeyDown)
@@ -95,14 +102,21 @@ public class CalibrationController : MonoBehaviour
                 text4.enabled = false;
                 accept4.enabled = false;
                 repeat4.enabled = false;
+                visualizer3.enabled = true;
+
                 accept4.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
                 repeat4.GetComponentInChildren<TextMeshProUGUI>().enabled = false;
                 if (!beatCounter.GetComponentInParent<AudioSource>().isPlaying)
                     // if the audio isn't already playing, start counting beats.
                     beatCounter.playBeats();
-                if (Input.anyKeyDown)
+                if (Input.anyKeyDown) {
                     // if any key is pressed, do a calibration beat.
-                    beatChecker.calibrateInput();
+                    if (beatChecker.isOnBeat())
+                        visualizer3.color = new Color(0, 1, 0, 1);
+                    if (!beatChecker.isOnBeat())
+                        visualizer3.color = new Color(1, 0, 0, 1);
+                        beatChecker.calibrateInput();
+                    }
                 if (BeatCheck.calibrationBeats.Count >= 10)
                 {
                     // after 10 inputs, stop counting and move to stage 4
@@ -119,6 +133,7 @@ public class CalibrationController : MonoBehaviour
                 text4.enabled = true;
                 accept4.enabled = true;
                 repeat4.enabled = true;
+                visualizer3.enabled = false;
                 accept4.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
                 repeat4.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
 
