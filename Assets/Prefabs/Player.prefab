@@ -224,6 +224,7 @@ GameObject:
   - component: {fileID: 8144680005620530970}
   - component: {fileID: 119825082748116254}
   - component: {fileID: 2478990788039888848}
+  - component: {fileID: 5789380393957825910}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -322,6 +323,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbf89b710026704c93dba78d06f5d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  immortal: 0
   animationComponent: {fileID: 951733073937309517}
 --- !u!114 &2478990788039888848
 MonoBehaviour:
@@ -337,3 +339,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   force: 25000
   timerThreshold: 0.5
+--- !u!114 &5789380393957825910
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9193161191087921385}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
