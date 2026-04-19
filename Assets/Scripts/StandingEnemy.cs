@@ -48,6 +48,11 @@ public class StandingEnemy : BaseEnemy
         //Debug.Log($"{this} moves {inputVector} on beat");
         movementComponent.BeatMove(inputVector);
         animationComponent.UpdateAnimation(inputVector);
+
+        if (currentState == State.Chase)
+        {
+            StopAttackingTarget();
+        }
     }
 
     protected override void EnterState(State state)
