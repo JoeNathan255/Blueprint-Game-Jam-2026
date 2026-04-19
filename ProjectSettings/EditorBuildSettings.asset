@@ -11,10 +11,16 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/StartMenu.unity
     guid: 4b08935bfb5b37d4a9299c59616ce50c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/TopDownScene.unity
     guid: 58a9b0b49bd343440a1e92ce064c01db
   - enabled: 1
     path: Assets/Scenes/DeathScreen.unity
     guid: 662ea9e094fb7954a8cdc7585237adfa
+  - enabled: 1
+    path: Assets/Scenes/Level.unity
+    guid: b1566851a5118ea478ae77218ceacf41
+  - enabled: 1
+    path: Assets/Scenes/WinScreen.unity
+    guid: effafd66d03525048b7d674d96f9e5f1
   m_configObjects: {}

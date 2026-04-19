@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(SpriteRenderer), typeof(Rigidbody2D), typeof(Collider2D))]
 public class DoorComponent : MonoBehaviour
 {
-    [SerializeField] public bool isOpen { get; private set; } = false;
+    public bool isOpen = false;
     private SpriteRenderer spriteRenderer;
     private Rigidbody2D entityRigidbody;
 

@@ -5,23 +5,25 @@ using UnityEngine;
 public class BeatCheck : MonoBehaviour
 {
     List<float> calibrationBeats = new List<float>();
-    public float calibrationOffset;
+    public float calibrationOffset = 0f;
     BeatCount beatCount;
-    public float tolerance;
+    public float tolerancePercentage = 0.25f;
+    private float tolerance;
     void Start()
     {
         beatCount = GetComponent<BeatCount>();
+        tolerance = beatCount.timeBetweenBeats * tolerancePercentage;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        tolerance = beatCount.timeBetweenBeats * tolerancePercentage;
     }
 
     public bool isOnBeat()
     {
-        return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset < tolerance 
+        return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset < tolerance
             || beatCount.timeSinceLastBeat - calibrationOffset <= tolerance;
     }
 
@@ -32,7 +34,7 @@ public class BeatCheck : MonoBehaviour
         else calibrationBeats.Add(beatCount.timeSinceLastBeat);
 
         float sum = 0f;
-        foreach(float margin in calibrationBeats)
+        foreach (float margin in calibrationBeats)
         {
             sum += margin;
         }
@@ -40,5 +42,17 @@ public class BeatCheck : MonoBehaviour
         calibrationOffset = sum / calibrationBeats.Count;
 
         return sum / calibrationBeats.Count;
+    }
+
+    public float accuracy()
+    {
+        if (Mathf.Abs(beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset) <= Mathf.Abs(beatCount.timeSinceLastBeat - calibrationOffset))
+        {
+            return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat;
+        }
+        else
+        {
+            return beatCount.timeSinceLastBeat;
+        }
     }
 }

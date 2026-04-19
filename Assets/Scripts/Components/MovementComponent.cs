@@ -29,9 +29,15 @@ public class MovementComponent : MonoBehaviour
         entityRigidbody = GetComponent<Rigidbody2D>();
     }
 
+    public void BeatMove(Vector2 normalizedInputVec)
+    {
+        if (!active) { return; }
+        entityRigidbody.AddForce(normalizedInputVec * force);
+    }
+
     public void Move(Vector2 normalizedInputVec)
     {
-        if (!active) {return;}
+        if (!active) { return; }
 
         entityRigidbody.AddForce(normalizedInputVec * force * Time.deltaTime);
         //entityRigidbody.velocity = normalizedInputVec * speed;
@@ -48,7 +54,12 @@ public class MovementComponent : MonoBehaviour
 
     public void StepMove(Vector2 normalizedInputVec)
     {
-        if (!active) {return;}
+        if (!active) { return; }
+
+        if (timer >= timerThreshold && GetComponent<PlayerController>() != null)
+        {
+            GlobalEvents.Instance.OnContinuedMovement();
+        }
 
         if (oneShot || timer >= timerThreshold)
         {

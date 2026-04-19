@@ -6,6 +6,7 @@ TagManager:
   tags:
   - beat tag
   - Enemy
+  - CutscenePatient
   layers:
   - Default
   - TransparentFX

@@ -2,73 +2,73 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(MovementComponent), typeof(VisionComponent), typeof(ChaseMovement))]
 [RequireComponent(typeof(WaypointMovement))]
 public class PatrollingEnemy : BaseEnemy
 {
     [SerializeField] private AnimationComponent animationComponent;
-    [SerializeField] private float patrolSpeed = 15000f;
-    [SerializeField] private float chaseSpeed = 40000f;
+    [SerializeField] private float patrolSpeed = 10000f;
+    [SerializeField] private float chaseSpeed = 20000f;
+    [SerializeField] private float chaseTempoIncreaseRadius = 6;
+    [SerializeField] private float chaseTempoIncreaseStrength = 15;
+    [SerializeField] private float patrolTempoIncreaseRadius = 3;
+    [SerializeField] private float patrolTempoIncreaseStrength = 5;
 
-    private MovementComponent movementComponent;
-    private VisionComponent visionComponent;
-    private ChaseMovement chaseMovement;
     private WaypointMovement waypointMovement;
     private Vector2 inputVector = new Vector2();
 
     public void Start()
     {
+        GlobalEvents.Instance.beatCount.OnBeat.AddListener(ActionOnBeat);
+        defaultState = State.Patrol;
         movementComponent = GetComponent<MovementComponent>();
-        visionComponent = GetComponent<VisionComponent>();
         chaseMovement = GetComponent<ChaseMovement>();
         waypointMovement = GetComponent<WaypointMovement>();
         SetState(State.Patrol);
     }
 
-    public void Update()
+    public void ActionOnBeat()
     {
+        if (!alive) { return; }
+
+        //Debug.Log($"{this} action on beat");
         switch (currentState)
         {
             case State.Patrol:
+                tempoIncreaseRadius = patrolTempoIncreaseRadius;
+                tempoIncreaseStrength = patrolTempoIncreaseStrength;
+                TempoIncreaseCheck();
                 inputVector = movementComponent.GetDirectionTo(waypointMovement.GetTargetWaypoint());
                 break;
             case State.Chase:
+                tempoIncreaseRadius = chaseTempoIncreaseRadius;
+                tempoIncreaseStrength = chaseTempoIncreaseStrength;
+                TempoIncreaseCheck();
                 inputVector = movementComponent.GetDirectionTo(chaseMovement.GetTarget());
                 break;
             case State.Disabled:
                 return;
         }
 
-        movementComponent.StepMove(inputVector);
+        //Debug.Log($"{this} moves {inputVector} on beat");
+        movementComponent.BeatMove(inputVector);
         animationComponent.UpdateAnimation(inputVector);
-        visionComponent.SetLookDirection(inputVector);
-    }
-
-    public void OnPlayerDetected()
-    {
-        Debug.Log("Player Detected");
-        if (currentState == State.Patrol)
-        {
-            SetState(State.Chase);
-        }
-    }
-
-    public void OnPlayerLost()
-    {
-        //Debug.Log("Player Lost");
-        //SetState(State.Patrol);
     }
 
     protected override void EnterState(State state)
     {
-        Debug.Log($"Entering {state}");
+        if (!alive || animationComponent == null) { return; }
+        //Debug.Log($"Entering {state}");
 
         switch (state)
         {
             case State.Patrol:
+                tempoIncreaseRadius = patrolTempoIncreaseRadius;
+                tempoIncreaseStrength = patrolTempoIncreaseStrength;
                 movementComponent.force = patrolSpeed;
                 break;
             case State.Chase:
+                tempoIncreaseRadius = chaseTempoIncreaseRadius;
+                tempoIncreaseStrength = chaseTempoIncreaseStrength;
                 movementComponent.force = chaseSpeed;
                 break;
             case State.Disabled:
