@@ -6,11 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class StartMenuController : MonoBehaviour
 {
-    [SerializeField] private string nextSceneName;
+    //[SerializeField] private string nextSceneName;
 
     public void OnStartButtonClicked()
     {
-        SceneManager.LoadScene(nextSceneName);
+        GameObject.Find("UIController").GetComponent<SceneFader>().ChangeScene("Calibration");
     }
 
     public void OnExitButtonClicked()
