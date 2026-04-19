@@ -3,6 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(MovementComponent))]
 public class PlayerController : MonoBehaviour, IKillable
 {
+    [SerializeField] private bool immortal = false;
     [SerializeField] private AnimationComponent animationComponent;
 
     private MovementComponent movementComponent;
@@ -46,7 +47,10 @@ public class PlayerController : MonoBehaviour, IKillable
 
     public void Kill()
     {
-        Debug.Log("Player Killed");
-        GlobalEvents.BroadcastGameOver();
+        if (!immortal)
+        {
+            Debug.Log("Player Killed");
+            GlobalEvents.BroadcastGameOver();
+        }
     }
 }

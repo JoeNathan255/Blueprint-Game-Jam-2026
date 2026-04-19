@@ -12,8 +12,8 @@ public class GlobalEvents : MonoBehaviour
     public float minTempo = 60;
     public float maxTempo = 200;
     [SerializeField] private string gameOverScene = "DeathScreen";
-    [SerializeField] private BeatCheck beatCheck;
-    [SerializeField] private BeatCount beatCount;
+    public BeatCheck beatCheck;
+    public BeatCount beatCount;
 
     public static GlobalEvents Instance;
 
@@ -46,7 +46,6 @@ public class GlobalEvents : MonoBehaviour
     public void OnPlayerInput()
     {
         Debug.Log("Accuracy: " + beatCheck.accuracy().ToString("0.##") + (beatCheck.isOnBeat() ? "HIT!" : "miss...") + "0 - " + beatCount.timeBetweenBeats);
-        //Debug.Log("Accuracy: " + Mathf.Abs(beatTime - Time.timeSinceLevelLoad));
         if (beatCheck.isOnBeat())
         {
             foreach (Level level in levels)

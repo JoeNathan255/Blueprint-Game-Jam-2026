@@ -12,14 +12,16 @@ public class StandingEnemy : BaseEnemy
 
     void Start()
     {
+        GlobalEvents.Instance.beatCount.OnBeat.AddListener(ActionOnBeat);
         defaultState = State.Idle;
         movementComponent = GetComponent<MovementComponent>();
         chaseMovement = GetComponent<ChaseMovement>();
         SetState(State.Idle);
     }
 
-    void Update()
+    public void ActionOnBeat()
     {
+        //Debug.Log($"{this} action on beat");
         switch (currentState)
         {
             case State.Chase:
@@ -32,7 +34,8 @@ public class StandingEnemy : BaseEnemy
                 return;
         }
 
-        movementComponent.StepMove(inputVector);
+        Debug.Log($"{this} moves {inputVector} on beat");
+        movementComponent.BeatMove(inputVector);
         animationComponent.UpdateAnimation(inputVector);
     }
 

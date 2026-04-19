@@ -16,14 +16,13 @@ public class BeatCheck : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        tolerance = beatCount.timeBetweenBeats * 0.33f;
     }
 
     public bool isOnBeat()
     {
-        return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset < tolerance 
+        return beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset < tolerance
             || beatCount.timeSinceLastBeat - calibrationOffset <= tolerance;
-        //return beatCount.timeSinceLastBeat < tolerance || beatCount.timeSinceLastBeat > beatCount.timeBetweenBeats - tolerance;
     }
 
     public float calibrateInput()
@@ -33,7 +32,7 @@ public class BeatCheck : MonoBehaviour
         else calibrationBeats.Add(beatCount.timeSinceLastBeat);
 
         float sum = 0f;
-        foreach(float margin in calibrationBeats)
+        foreach (float margin in calibrationBeats)
         {
             sum += margin;
         }
@@ -52,8 +51,6 @@ public class BeatCheck : MonoBehaviour
         else
         {
             return beatCount.timeSinceLastBeat;
-        } 
-
-        //return Mathf.Abs(beatCount.timeBetweenBeats - beatCount.timeSinceLastBeat - calibrationOffset);
+        }
     }
 }

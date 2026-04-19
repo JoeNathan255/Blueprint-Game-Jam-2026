@@ -6,7 +6,7 @@ using UnityEngine;
 public class PatrollingEnemy : BaseEnemy
 {
     [SerializeField] private AnimationComponent animationComponent;
-    [SerializeField] private float patrolSpeed = 5000f;
+    [SerializeField] private float patrolSpeed = 10000f;
     [SerializeField] private float chaseSpeed = 20000f;
 
     private WaypointMovement waypointMovement;
@@ -14,6 +14,7 @@ public class PatrollingEnemy : BaseEnemy
 
     public void Start()
     {
+        GlobalEvents.Instance.beatCount.OnBeat.AddListener(ActionOnBeat);
         defaultState = State.Patrol;
         movementComponent = GetComponent<MovementComponent>();
         chaseMovement = GetComponent<ChaseMovement>();
@@ -21,21 +22,24 @@ public class PatrollingEnemy : BaseEnemy
         SetState(State.Patrol);
     }
 
-    public void Update()
+    public void ActionOnBeat()
     {
+        //Debug.Log($"{this} action on beat");
         switch (currentState)
         {
             case State.Patrol:
                 inputVector = movementComponent.GetDirectionTo(waypointMovement.GetTargetWaypoint());
                 break;
             case State.Chase:
+                TempoIncreaseCheck();
                 inputVector = movementComponent.GetDirectionTo(chaseMovement.GetTarget());
                 break;
             case State.Disabled:
                 return;
         }
 
-        movementComponent.StepMove(inputVector);
+        Debug.Log($"{this} moves {inputVector} on beat");
+        movementComponent.BeatMove(inputVector);
         animationComponent.UpdateAnimation(inputVector);
     }
 

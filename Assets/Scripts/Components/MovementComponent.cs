@@ -29,6 +29,12 @@ public class MovementComponent : MonoBehaviour
         entityRigidbody = GetComponent<Rigidbody2D>();
     }
 
+    public void BeatMove(Vector2 normalizedInputVec)
+    {
+        if (!active) { return; }
+        entityRigidbody.AddForce(normalizedInputVec * force);
+    }
+
     public void Move(Vector2 normalizedInputVec)
     {
         if (!active) { return; }
