@@ -134,8 +134,8 @@ public class CalibrationController : MonoBehaviour
     public void OnAcceptButtonClicked()
     {
         if (GameObject.Find("UIController") != null)
-            GameObject.Find("UIController").GetComponent<SceneFader>().ChangeScene("TopDownScene");
-        else SceneManager.LoadScene("TopDownScene");
+            GameObject.Find("UIController").GetComponent<SceneFader>().ChangeScene("Level");
+        else SceneManager.LoadScene("Level");
             return;
     }
 

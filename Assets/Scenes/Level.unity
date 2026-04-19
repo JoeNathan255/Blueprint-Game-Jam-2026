@@ -14022,6 +14022,10 @@ PrefabInstance:
       value: 60
       objectReference: {fileID: 0}
     - target: {fileID: 8272498137238094525, guid: 9dc8749b8e78dce4999069c195c6b1a7, type: 3}
+      propertyPath: counting
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8272498137238094525, guid: 9dc8749b8e78dce4999069c195c6b1a7, type: 3}
       propertyPath: audioSource
       value: 
       objectReference: {fileID: 1931606413}
