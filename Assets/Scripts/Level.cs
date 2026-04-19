@@ -11,6 +11,7 @@ public class Level : MonoBehaviour
 
     void Start()
     {
+        GlobalEvents.Instance.beatCount.OnBeat.AddListener(OnLevelBeat);
         GlobalEvents.Instance.RegisterLevel(this);
     }
 
@@ -21,6 +22,11 @@ public class Level : MonoBehaviour
             GlobalEvents.Instance.minTempo = levelMinTempo;
             DecreaseTempoIfNoEnemiesNear();
         }
+    }
+
+    public void OnLevelBeat()
+    {
+        
     }
 
     public void OnPlayerOffBeat()
