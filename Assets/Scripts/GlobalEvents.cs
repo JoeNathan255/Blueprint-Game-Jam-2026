@@ -10,7 +10,7 @@ public class GlobalEvents : MonoBehaviour
 {
     public PlayerController player;
     public float minTempo = 60;
-    public float maxTempo = 200;
+    public float maxTempo = 180;
     [SerializeField] private string gameOverScene = "DeathScreen";
     [SerializeField] private string winScene = "WinScreen";
     public BeatCheck beatCheck;
