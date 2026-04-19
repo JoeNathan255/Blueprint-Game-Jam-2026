@@ -157,7 +157,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71450aef9b12d864f9af1f5857011300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempoIncreaseStrength: 10
+  tempoIncreaseStrength: 15
   tempoIncreaseRadius: 5
   animationComponent: {fileID: 8866471710052437644}
   patrolSpeed: 15000

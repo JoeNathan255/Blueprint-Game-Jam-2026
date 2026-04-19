@@ -18,8 +18,6 @@ public class ChaseMovement : MonoBehaviour
         {
             if (oneShot)
             {
-                Debug.Log("Target Reached oneshot!");
-
                 if (target.GetComponent<IKillable>() != null)
                 {
                     Debug.Log("Kill");

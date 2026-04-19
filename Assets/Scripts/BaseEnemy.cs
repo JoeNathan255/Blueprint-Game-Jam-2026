@@ -6,8 +6,8 @@ using UnityEngine;
 public abstract class BaseEnemy : MonoBehaviour, IKillable
 {
     public enum State { Idle, Patrol, Chase, Disabled }
-    public float tempoIncreaseStrength = 10;
-    public float tempoIncreaseRadius = 5;
+    protected float tempoIncreaseStrength;
+    protected float tempoIncreaseRadius;
     protected State currentState;
     protected State defaultState;
     protected MovementComponent movementComponent;
@@ -63,5 +63,10 @@ public abstract class BaseEnemy : MonoBehaviour, IKillable
         {
             GlobalEvents.Instance.SetNextTempoIncrease(tempoIncreaseStrength);
         }
+    }
+
+    public float getTempoIncreaseRadius()
+    {
+        return tempoIncreaseRadius;
     }
 }

@@ -273,5 +273,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ed61063b199944e89246e9fa3c7b5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  tempoIncreaseStrength: 15
+  tempoIncreaseRadius: 5
   animationComponent: {fileID: 5967597957707349485}
   chaseSpeed: 40000

@@ -12,6 +12,7 @@ public class GlobalEvents : MonoBehaviour
     public float minTempo = 60;
     public float maxTempo = 200;
     [SerializeField] private string gameOverScene = "DeathScreen";
+    [SerializeField] private string winScene = "WinScreen";
     public BeatCheck beatCheck;
     public BeatCount beatCount;
 
@@ -24,6 +25,11 @@ public class GlobalEvents : MonoBehaviour
     public static void BroadcastGameOver()
     {
         SceneManager.LoadScene(Instance.gameOverScene);
+    }
+
+    public static void BroadcastGameWon()
+    {
+        SceneManager.LoadScene(Instance.winScene);
     }
 
     public static void BroadcastPlayerInput()

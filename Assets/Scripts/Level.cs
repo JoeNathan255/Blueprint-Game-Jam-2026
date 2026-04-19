@@ -5,6 +5,7 @@ using UnityEngine;
 public class Level : MonoBehaviour
 {
     public float levelMinTempo = 60;
+    public float TempoDecreaseValue = -10;
     [SerializeField] public BaseEnemy[] levelEnemies;
     [SerializeField] private bool isPlayerInLevel;
 
@@ -60,12 +61,12 @@ public class Level : MonoBehaviour
     {
         foreach (BaseEnemy enemy in levelEnemies)
         {
-            if (Vector2.Distance(enemy.transform.position, GlobalEvents.Instance.player.transform.position) < enemy.tempoIncreaseRadius)
+            if (Vector2.Distance(enemy.transform.position, GlobalEvents.Instance.player.transform.position) < enemy.getTempoIncreaseRadius())
             {
                 return;
             }
         }
 
-        GlobalEvents.Instance.SetNextTempoIncrease(-5);
+        GlobalEvents.Instance.SetNextTempoIncrease(TempoDecreaseValue);
     }
 }
