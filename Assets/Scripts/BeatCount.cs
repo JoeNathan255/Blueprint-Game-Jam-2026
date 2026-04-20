@@ -46,7 +46,7 @@ public class BeatCount : MonoBehaviour
                 OnBeat?.Invoke();
                 timeSinceLastBeat -= timeBetweenBeats;
                 beatNumber += 1;
-                gameMusic.setParameterByName("Tempo", tempo);
+                gameMusic.setParameterByName("tempo", tempo);
             }
         }
     }

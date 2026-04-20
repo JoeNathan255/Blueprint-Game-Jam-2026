@@ -34,12 +34,12 @@ public class GlobalEvents : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             Debug.Log("increase tempo");
-            SetNextTempoIncrease(20);
+            SetNextTempoIncrease(5);
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
             Debug.Log("decrease tempo");
-            SetNextTempoIncrease(-20);
+            SetNextTempoIncrease(5);
         }
     }
 
