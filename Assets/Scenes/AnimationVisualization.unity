@@ -517,6 +517,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TempoChangeAreaSlow
       objectReference: {fileID: 0}
+    - target: {fileID: 7804772320675179504, guid: 9a9769917855d74408b19e5bf26b4731, type: 3}
+      propertyPath: tempoChangeAmount
+      value: -10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -550,6 +554,10 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 212612279}
+    - target: {fileID: 6852144396271681852, guid: 9dc8749b8e78dce4999069c195c6b1a7, type: 3}
+      propertyPath: minTempo
+      value: 80
+      objectReference: {fileID: 0}
     - target: {fileID: 7790925177442820717, guid: 9dc8749b8e78dce4999069c195c6b1a7, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -592,7 +600,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8272498137238094525, guid: 9dc8749b8e78dce4999069c195c6b1a7, type: 3}
       propertyPath: tempo
-      value: 120
+      value: 80
       objectReference: {fileID: 0}
     - target: {fileID: 8272498137238094525, guid: 9dc8749b8e78dce4999069c195c6b1a7, type: 3}
       propertyPath: counting
