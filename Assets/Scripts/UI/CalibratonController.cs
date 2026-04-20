@@ -109,6 +109,7 @@ public class CalibrationController : MonoBehaviour
                 if (!beatCounter.GetComponentInParent<AudioSource>().isPlaying)
                     // if the audio isn't already playing, start counting beats.
                     beatCounter.playBeats();
+<<<<<<< Updated upstream:Assets/Scripts/CalibratonController.cs
                 if (Input.anyKeyDown) {
                     // if any key is pressed, do a calibration beat.
                     if (beatChecker.isOnBeat())
@@ -117,6 +118,16 @@ public class CalibrationController : MonoBehaviour
                         visualizer3.color = new Color(1, 0, 0, 1);
                         beatChecker.calibrateInput();
                     }
+=======
+                if (Input.anyKeyDown)
+                {
+                    // if any key is pressed, do a calibration beat.
+                    beatChecker.calibrateInput();
+                    if (beatChecker.isOnBeat())
+                        GameObject.Find("HitOrMiss").GetComponent<Image>().color = new Color(0, 1, 0, 1);
+                    else GameObject.Find("HitOrMiss").GetComponent<Image>().color = new Color(1, 0, 1, 1);
+                }
+>>>>>>> Stashed changes:Assets/Scripts/UI/CalibratonController.cs
                 if (BeatCheck.calibrationBeats.Count >= 10)
                 {
                     // after 10 inputs, stop counting and move to stage 4
@@ -137,7 +148,7 @@ public class CalibrationController : MonoBehaviour
                 accept4.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
                 repeat4.GetComponentInChildren<TextMeshProUGUI>().enabled = true;
 
-                text4.SetText("Your offset is " + BeatCheck.calibrationOffset.ToString("0.###") + '.');
+                text4.SetText("Your offset is " + BeatCheck.calibrationOffset.ToString("0.###") + "seconds.");
                 break;
 
             default:

@@ -173,7 +173,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4d3e3a245bb3140b8344ab77e80acf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< Updated upstream
   tolerancePercentage: 0.15
+=======
+  tolerancePercentage: 0.25
+>>>>>>> Stashed changes
 --- !u!4 &161927689
 Transform:
   m_ObjectHideFlags: 0
@@ -742,7 +746,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: WAKE. UP.
+  m_text: WAKE UP.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b907fbaeb6dde8478b0ebf2016a8c94, type: 2}
   m_sharedMaterial: {fileID: 291763657153835778, guid: 3b907fbaeb6dde8478b0ebf2016a8c94, type: 2}
@@ -1752,7 +1756,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'Your offset is
 
-    X.XXX.'
+    X.XXX seconds.'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3b907fbaeb6dde8478b0ebf2016a8c94, type: 2}
   m_sharedMaterial: {fileID: 291763657153835778, guid: 3b907fbaeb6dde8478b0ebf2016a8c94, type: 2}

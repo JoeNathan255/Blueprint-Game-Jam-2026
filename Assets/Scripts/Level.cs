@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Level : MonoBehaviour
 {
@@ -27,6 +28,8 @@ public class Level : MonoBehaviour
     {
         if (!isPlayerInLevel) { return; }
 
+        GameObject.Find("HitOrMiss").GetComponent<Image>().color = new Color(1, 0, 0, .5f); // THIS IS DEBUG AHHHHH!!!!!!
+
         foreach (BaseEnemy enemy in levelEnemies)
         {
             //Debug.Log($"{enemy} aggro player");
@@ -37,6 +40,7 @@ public class Level : MonoBehaviour
     public void OnPlayerOnBeat()
     {
         if (!isPlayerInLevel) { return; }
+        GameObject.Find("HitOrMiss").GetComponent<Image>().color = new Color(0, 1, 0, .5f); // THIS IS DEBUG AHHHHH!!!!!
 
         foreach (BaseEnemy enemy in levelEnemies)
         {
