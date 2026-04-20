@@ -29,7 +29,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 2, y: 2, z: 1}
+  m_LocalScale: {x: 0.1, y: 0.1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6613200716218441681}
@@ -75,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: -1530479279
   m_SortingLayer: 2
   m_SortingOrder: 1
-  m_Sprite: {fileID: -305101355, guid: d7a0f747a7b4761459c61e9922d33db5, type: 3}
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
+  m_Sprite: {fileID: 21300000, guid: f5d421d7814ce8343b1ccec9d344c00a, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -96,7 +96,7 @@ Animator:
   m_GameObject: {fileID: 4801778621742176511}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fdf4a2ffafa47bf4f814ecbb59ab5438, type: 2}
+  m_Controller: {fileID: 9100000, guid: 70beb385d8b416a4c98f788b128fe18a, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -273,7 +273,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 05ed61063b199944e89246e9fa3c7b5b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tempoIncreaseStrength: 15
-  tempoIncreaseRadius: 5
   animationComponent: {fileID: 5967597957707349485}
   chaseSpeed: 40000
+  chaseTempoIncreaseRadius: 6
+  chaseTempoIncreaseStrength: 15
+  idleTempoIncreaseRadius: 3
+  idleTempoIncreaseStrength: 5

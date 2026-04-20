@@ -13,6 +13,7 @@ public abstract class BaseEnemy : MonoBehaviour, IKillable
     protected MovementComponent movementComponent;
     protected ChaseMovement chaseMovement;
     protected bool alive = true;
+    public bool canIncreaseTempo = true;
 
     public void Kill()
     {
@@ -57,7 +58,7 @@ public abstract class BaseEnemy : MonoBehaviour, IKillable
 
     protected virtual void TempoIncreaseCheck()
     {
-        if (!alive) { return; }
+        if (!alive || !canIncreaseTempo) { return; }
 
         if (Vector2.Distance(transform.position, GlobalEvents.Instance.player.transform.position) < tempoIncreaseRadius)
         {

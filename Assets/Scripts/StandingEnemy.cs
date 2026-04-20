@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,7 +13,6 @@ public class StandingEnemy : BaseEnemy
     [SerializeField] private float idleTempoIncreaseStrength = 5;
 
     private Vector2 inputVector = new Vector2();
-
 
     void Start()
     {
@@ -37,6 +37,7 @@ public class StandingEnemy : BaseEnemy
                 inputVector = movementComponent.GetDirectionTo(chaseMovement.GetTarget());
                 break;
             case State.Idle:
+                animationComponent.UpdateAnimation(Vector2.zero);
                 tempoIncreaseRadius = idleTempoIncreaseRadius;
                 tempoIncreaseStrength = idleTempoIncreaseStrength;
                 TempoIncreaseCheck();
@@ -47,12 +48,13 @@ public class StandingEnemy : BaseEnemy
 
         //Debug.Log($"{this} moves {inputVector} on beat");
         movementComponent.BeatMove(inputVector);
-        animationComponent.UpdateAnimation(inputVector);
 
         if (currentState == State.Chase)
         {
             StopAttackingTarget();
         }
+
+        animationComponent.UpdateAnimation(inputVector);
     }
 
     protected override void EnterState(State state)

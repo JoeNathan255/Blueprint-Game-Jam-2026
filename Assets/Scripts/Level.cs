@@ -8,6 +8,7 @@ public class Level : MonoBehaviour
     public float TempoDecreaseValue = -10;
     [SerializeField] public BaseEnemy[] levelEnemies;
     [SerializeField] private bool isPlayerInLevel;
+    public bool canIncreaseTempo = true;
 
     void Start()
     {
@@ -17,7 +18,7 @@ public class Level : MonoBehaviour
 
     void Update()
     {
-        if (isPlayerInLevel)
+        if (isPlayerInLevel && canIncreaseTempo)
         {
             GlobalEvents.Instance.minTempo = levelMinTempo;
             DecreaseTempoIfNoEnemiesNear();
@@ -26,7 +27,7 @@ public class Level : MonoBehaviour
 
     public void OnLevelBeat()
     {
-        
+
     }
 
     public void OnPlayerOffBeat()
@@ -73,6 +74,9 @@ public class Level : MonoBehaviour
             }
         }
 
-        GlobalEvents.Instance.SetNextTempoIncrease(TempoDecreaseValue);
+        if (canIncreaseTempo)
+        {
+            GlobalEvents.Instance.SetNextTempoIncrease(TempoDecreaseValue);
+        }
     }
 }

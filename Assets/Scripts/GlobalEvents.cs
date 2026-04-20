@@ -22,6 +22,27 @@ public class GlobalEvents : MonoBehaviour
     private List<Level> levels = new List<Level>();
     public float nextTempoIncrease = 0;
 
+    void Start()
+    {
+        beatCount = GetComponent<BeatCount>();
+        beatCheck = GetComponent<BeatCheck>();
+        beatCount.OnBeat.AddListener(OnBeatGlobal);
+    }
+
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            Debug.Log("increase tempo");
+            SetNextTempoIncrease(20);
+        }
+        else if (Input.GetKeyDown(KeyCode.X))
+        {
+            Debug.Log("decrease tempo");
+            SetNextTempoIncrease(-20);
+        }
+    }
+
     public static void BroadcastGameOver()
     {
         SceneManager.LoadScene(Instance.gameOverScene);
@@ -82,7 +103,7 @@ public class GlobalEvents : MonoBehaviour
         levels.Add(level);
     }
 
-    public void OnBeat()
+    public void OnBeatGlobal()
     {
         Debug.Log("Beat");
         SetNewTempo();
@@ -96,5 +117,6 @@ public class GlobalEvents : MonoBehaviour
     private void SetNewTempo()
     {
         beatCount.tempo = Mathf.Clamp(beatCount.tempo + nextTempoIncrease, minTempo, maxTempo);
+        nextTempoIncrease = 0;
     }
 }
