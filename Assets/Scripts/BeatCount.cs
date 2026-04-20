@@ -4,8 +4,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
+
 public class BeatCount : MonoBehaviour
 {
+
     public UnityEvent OnBeat;
     public float tempo;
     public float timeSinceLastBeat;
@@ -14,6 +16,7 @@ public class BeatCount : MonoBehaviour
     float timeAfterLoad = -2;
     public bool counting = false;
     AudioSource beats;
+    FMOD.Studio.EventInstance gameMusic;
 
     private void OnEnable()
     {
@@ -22,6 +25,7 @@ public class BeatCount : MonoBehaviour
     void Start()
     {
         beats = GetComponent<AudioSource>();
+        gameMusic = FMODUnity.RuntimeManager.CreateInstance("event:/background_music");
     }
 
     // Update is called once per frame
@@ -42,6 +46,7 @@ public class BeatCount : MonoBehaviour
                 OnBeat?.Invoke();
                 timeSinceLastBeat -= timeBetweenBeats;
                 beatNumber += 1;
+                gameMusic.setParameterByName("Tempo", tempo);
             }
         }
     }
