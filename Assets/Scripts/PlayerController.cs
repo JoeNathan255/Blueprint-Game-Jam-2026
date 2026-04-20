@@ -1,13 +1,18 @@
+using System.Threading;
 using UnityEngine;
 
 [RequireComponent(typeof(MovementComponent))]
 public class PlayerController : MonoBehaviour, IKillable
 {
+    public float deathTime = 0.5f;
     [SerializeField] private bool immortal = false;
     [SerializeField] private AnimationComponent animationComponent;
 
     private MovementComponent movementComponent;
     private bool isMobile = true;
+    private bool isDying = false;
+    private Vector2 inputVec;
+    private float deathTimer = 0f;
 
     void Start()
     {
@@ -16,6 +21,15 @@ public class PlayerController : MonoBehaviour, IKillable
 
     void Update()
     {
+        if (isDying)
+        {
+            deathTimer += Time.deltaTime;
+            if (deathTimer >= deathTime)
+            {
+                GlobalEvents.BroadcastGameOver();
+            }
+        }
+
         if (!isMobile)
         {
             return;
@@ -23,7 +37,7 @@ public class PlayerController : MonoBehaviour, IKillable
 
         float movX = Input.GetAxis("Horizontal");
         float movY = Input.GetAxis("Vertical");
-        Vector2 inputVec = new Vector2(movX, movY);
+        inputVec = new Vector2(movX, movY);
 
         if (Input.anyKeyDown)
         {
@@ -49,8 +63,12 @@ public class PlayerController : MonoBehaviour, IKillable
     {
         if (!immortal)
         {
+            isDying = true;
+            isMobile = false;
+            animationComponent.entityAnimator.SetTrigger("TrDeath");
+            
             Debug.Log("Player Killed");
-            GlobalEvents.BroadcastGameOver();
+            //GlobalEvents.BroadcastGameOver();
         }
     }
 }

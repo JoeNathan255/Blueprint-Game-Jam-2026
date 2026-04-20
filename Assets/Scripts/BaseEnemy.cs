@@ -22,6 +22,18 @@ public abstract class BaseEnemy : MonoBehaviour, IKillable
         alive = false;
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.GetComponent<IKillable>() != null)
+        {
+            collision.gameObject.GetComponent<IKillable>().Kill();
+        }
+        if (collision.gameObject.tag == "Player")
+        {
+            Destroy(gameObject);
+        }
+    }
+
     public State GetState()
     {
         return currentState;
@@ -54,20 +66,5 @@ public abstract class BaseEnemy : MonoBehaviour, IKillable
     {
         if (!alive) { return; }
         SetState(defaultState);
-    }
-
-    protected virtual void TempoIncreaseCheck()
-    {
-        if (!alive || !canIncreaseTempo) { return; }
-
-        if (Vector2.Distance(transform.position, GlobalEvents.Instance.player.transform.position) < tempoIncreaseRadius)
-        {
-            GlobalEvents.Instance.SetNextTempoIncrease(tempoIncreaseStrength);
-        }
-    }
-
-    public float getTempoIncreaseRadius()
-    {
-        return tempoIncreaseRadius;
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine;
 public class AnimationComponent : MonoBehaviour
 {
     private Sprite entitySprite;
-    private Animator entityAnimator;
+    public Animator entityAnimator;
 
     void Start()
     {

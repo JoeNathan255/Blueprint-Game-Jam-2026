@@ -8,6 +8,7 @@ using UnityEngine.SceneManagement;
 
 public class GlobalEvents : MonoBehaviour
 {
+    public float tempoDecay = -5f;
     public PlayerController player;
     public float minTempo = 60;
     public float maxTempo = 180;
@@ -34,12 +35,12 @@ public class GlobalEvents : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             Debug.Log("increase tempo");
-            SetNextTempoIncrease(5);
+            SetNextTempoIncrease(20);
         }
         else if (Input.GetKeyDown(KeyCode.X))
         {
             Debug.Log("decrease tempo");
-            SetNextTempoIncrease(5);
+            SetNextTempoIncrease(-20);
         }
     }
 
@@ -117,6 +118,6 @@ public class GlobalEvents : MonoBehaviour
     private void SetNewTempo()
     {
         beatCount.tempo = Mathf.Clamp(beatCount.tempo + nextTempoIncrease, minTempo, maxTempo);
-        nextTempoIncrease = 0;
+        nextTempoIncrease = tempoDecay;
     }
 }

@@ -9,48 +9,10 @@ public class ChaseMovement : MonoBehaviour
     [SerializeField] private float margin = 2f;
 
     public UnityEvent TargetReached;
-    private bool active = true;
-    private bool oneShot = true;
-
-    void Update()
-    {
-        if (IsTargetReached() && active)
-        {
-            if (oneShot)
-            {
-                if (target.GetComponent<IKillable>() != null)
-                {
-                    Debug.Log("Kill");
-                    target.GetComponent<IKillable>().Kill();
-                }
-                if (GetComponent<BaseEnemy>() != null)
-                {
-                    GetComponent<BaseEnemy>().StopAttackingTarget();
-                }
-
-                TargetReached?.Invoke();
-            }
-            oneShot = false;
-        }
-        else
-        {
-            oneShot = true;
-        }
-    }
 
     public GameObject GetTarget()
     {
         return target;
-    }
-
-    private bool IsTargetReached()
-    {
-        return Vector2.Distance(transform.position, target.transform.position) < margin;
-    }
-
-    public void Disable()
-    {
-        active = false;
     }
 
     public void SetTarget(GameObject newTarget)

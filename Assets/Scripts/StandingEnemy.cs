@@ -7,10 +7,6 @@ public class StandingEnemy : BaseEnemy
 {
     [SerializeField] private AnimationComponent animationComponent;
     [SerializeField] private float chaseSpeed = 20000f;
-    [SerializeField] private float chaseTempoIncreaseRadius = 6;
-    [SerializeField] private float chaseTempoIncreaseStrength = 15;
-    [SerializeField] private float idleTempoIncreaseRadius = 3;
-    [SerializeField] private float idleTempoIncreaseStrength = 5;
 
     private Vector2 inputVector = new Vector2();
 
@@ -31,16 +27,10 @@ public class StandingEnemy : BaseEnemy
         switch (currentState)
         {
             case State.Chase:
-                tempoIncreaseRadius = chaseTempoIncreaseRadius;
-                tempoIncreaseStrength = chaseTempoIncreaseStrength;
-                TempoIncreaseCheck();
                 inputVector = movementComponent.GetDirectionTo(chaseMovement.GetTarget());
                 break;
             case State.Idle:
                 animationComponent.UpdateAnimation(Vector2.zero);
-                tempoIncreaseRadius = idleTempoIncreaseRadius;
-                tempoIncreaseStrength = idleTempoIncreaseStrength;
-                TempoIncreaseCheck();
                 return;
             case State.Disabled:
                 return;
@@ -65,18 +55,13 @@ public class StandingEnemy : BaseEnemy
         switch (state)
         {
             case State.Idle:
-                tempoIncreaseRadius = chaseTempoIncreaseRadius;
-                tempoIncreaseStrength = chaseTempoIncreaseStrength;
                 animationComponent.UpdateAnimation(Vector2.zero);
                 break;
             case State.Chase:
-                tempoIncreaseRadius = idleTempoIncreaseRadius;
-                tempoIncreaseStrength = idleTempoIncreaseStrength;
                 movementComponent.force = chaseSpeed;
                 break;
             case State.Disabled:
                 animationComponent.UpdateAnimation(Vector2.zero);
-                chaseMovement.Disable();
                 movementComponent.Disable();
                 movementComponent.AddRandomForce(5000f);
                 break;
