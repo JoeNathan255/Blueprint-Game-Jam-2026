@@ -38,7 +38,7 @@ public class BeatCount : MonoBehaviour
             timeBetweenBeats = 60f / tempo;
             if (timeSinceLastBeat >= timeBetweenBeats)
             {
-                Debug.Log("Beat!");
+                //Debug.Log("Beat!");
                 OnBeat?.Invoke();
                 timeSinceLastBeat -= timeBetweenBeats;
                 beatNumber += 1;

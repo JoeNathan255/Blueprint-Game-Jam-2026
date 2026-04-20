@@ -19,11 +19,13 @@ public class AnimationComponent : MonoBehaviour
         if (normalizedInputVec.x > 0 || normalizedInputVec.y > 0 || normalizedInputVec.x < 0 || normalizedInputVec.y < 0)
         {
             entityAnimator.SetBool("IsWalking", true);
+            entityAnimator.SetTrigger("TrWalk");
             entityAnimator.SetFloat("InputX", normalizedInputVec.x);
             entityAnimator.SetFloat("InputY", normalizedInputVec.y);
         }
         else
         {
+            entityAnimator.SetTrigger("TrIdle");
             entityAnimator.SetBool("IsWalking", false);
         }
     }
