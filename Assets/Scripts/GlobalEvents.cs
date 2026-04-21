@@ -22,6 +22,7 @@ public class GlobalEvents : MonoBehaviour
     public UnityEvent PlayerInput;
     private List<Level> levels = new List<Level>();
     public float nextTempoIncrease = 0;
+    public float nextTempo;
 
     void Start()
     {
@@ -119,7 +120,7 @@ public class GlobalEvents : MonoBehaviour
     {
         beatCount.tempo = Mathf.Clamp(beatCount.tempo + nextTempoIncrease, minTempo, maxTempo);
         nextTempoIncrease = tempoDecay;
-        
+
         if (beatCount.tempo == 90)
         {
             beatCount.tempo = 91;
