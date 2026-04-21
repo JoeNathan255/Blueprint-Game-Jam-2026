@@ -13,7 +13,6 @@ public abstract class BaseEnemy : MonoBehaviour, IKillable
     protected MovementComponent movementComponent;
     protected ChaseMovement chaseMovement;
     protected bool alive = true;
-    public bool canIncreaseTempo = true;
 
     public void Kill()
     {

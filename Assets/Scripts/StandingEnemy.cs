@@ -50,7 +50,7 @@ public class StandingEnemy : BaseEnemy
     protected override void EnterState(State state)
     {
         if (!alive || animationComponent == null) { return; }
-        //Debug.Log($"Entering {state}");
+        Debug.Log($"Entering {state}");
 
         switch (state)
         {
