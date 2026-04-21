@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
@@ -22,6 +23,8 @@ public class GlobalEvents : MonoBehaviour
     public UnityEvent PlayerInput;
     private List<Level> levels = new List<Level>();
     public float nextTempoIncrease = 0;
+    public new Dictionary<float, float> nextTempoBuffer = new Dictionary<float, float>();
+
     public float nextTempo;
 
     void Start()
@@ -110,23 +113,42 @@ public class GlobalEvents : MonoBehaviour
     {
         Debug.Log("Beat");
         SetNewTempo();
+        nextTempo = beatCount.tempo;
+        nextTempoBuffer = new Dictionary<float, float>();
+        nextTempoBuffer[float.MaxValue] = minTempo;
     }
 
     public void SetNextTempoIncrease(float increase)
     {
-        nextTempoIncrease = increase;
+        nextTempoIncrease = Math.Max(increase, nextTempo);
     }
 
-    public void SetNextTempo(float newTempo)
+    public void SetNextTempo(float newTempo, float distance)
     {
-        nextTempo = Mathf.FloorToInt(Mathf.Clamp(newTempo, minTempo, maxTempo));
+        nextTempoBuffer[distance] = newTempo;
+        //nextTempo = Mathf.FloorToInt(Mathf.Clamp(newTempo, minTempo, maxTempo));
     }
 
     private void SetNewTempo()
     {
         // beatCount.tempo = Mathf.Clamp(beatCount.tempo + nextTempoIncrease, minTempo, maxTempo);
         // nextTempoIncrease = tempoDecay;
-        beatCount.tempo = nextTempo;
+        if (nextTempoBuffer.Count() == 0)
+        {
+            return;
+        }
+
+        float closest = nextTempoBuffer.Keys.First();
+        float nTempo = nextTempoBuffer[closest];
+        foreach (float distance in nextTempoBuffer.Keys)
+        {
+            if (distance < closest)
+            {
+                closest = distance;
+                nTempo = nextTempoBuffer[closest];
+            }
+        }
+        beatCount.tempo = Mathf.FloorToInt(Mathf.Clamp(nTempo, minTempo, maxTempo));
 
         if (beatCount.tempo == 90)
         {
@@ -141,6 +163,11 @@ public class GlobalEvents : MonoBehaviour
         if (beatCount.tempo == 150)
         {
             beatCount.tempo = 151;
+        }
+
+        if (beatCount.tempo == 180)
+        {
+            beatCount.tempo = 179;
         }
     }
 }
