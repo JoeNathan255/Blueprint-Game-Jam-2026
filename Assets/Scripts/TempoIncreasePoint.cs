@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class TempoIncreasePoint : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
+    public float radius = 10f;
     void Update()
     {
-        
+        float distance = Vector2.Distance(transform.position, GlobalEvents.Instance.player.transform.position);
+        Debug.Log(distance);
     }
 }

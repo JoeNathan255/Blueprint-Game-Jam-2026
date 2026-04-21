@@ -119,6 +119,7 @@ public class GlobalEvents : MonoBehaviour
     {
         beatCount.tempo = Mathf.Clamp(beatCount.tempo + nextTempoIncrease, minTempo, maxTempo);
         nextTempoIncrease = tempoDecay;
+        
         if (beatCount.tempo == 90)
         {
             beatCount.tempo = 91;
