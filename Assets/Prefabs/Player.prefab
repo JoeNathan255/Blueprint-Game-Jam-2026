@@ -203,6 +203,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a81a9ff6a9c7e8f429e7143661a9c866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  entityAnimator: {fileID: 0}
 --- !u!1 &7535529284675335634
 GameObject:
   m_ObjectHideFlags: 0
@@ -309,7 +310,7 @@ GameObject:
   - component: {fileID: 119825082748116254}
   - component: {fileID: 2478990788039888848}
   - component: {fileID: 5789380393957825910}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -408,6 +409,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9bbf89b710026704c93dba78d06f5d85, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  deathTime: 0.5
   immortal: 0
   animationComponent: {fileID: 951733073937309517}
 --- !u!114 &2478990788039888848
