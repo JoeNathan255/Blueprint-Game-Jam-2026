@@ -116,10 +116,16 @@ public class GlobalEvents : MonoBehaviour
         nextTempoIncrease = increase;
     }
 
+    public void SetNextTempo(float newTempo)
+    {
+        nextTempo = Mathf.Max(newTempo, nextTempo);
+    }
+
     private void SetNewTempo()
     {
-        beatCount.tempo = Mathf.Clamp(beatCount.tempo + nextTempoIncrease, minTempo, maxTempo);
-        nextTempoIncrease = tempoDecay;
+        // beatCount.tempo = Mathf.Clamp(beatCount.tempo + nextTempoIncrease, minTempo, maxTempo);
+        // nextTempoIncrease = tempoDecay;
+        beatCount.tempo = nextTempo;
 
         if (beatCount.tempo == 90)
         {
