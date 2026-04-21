@@ -29,6 +29,7 @@ public class GlobalEvents : MonoBehaviour
         beatCount = GetComponent<BeatCount>();
         beatCheck = GetComponent<BeatCheck>();
         beatCount.OnBeat.AddListener(OnBeatGlobal);
+        nextTempo = minTempo;
     }
 
     void Update()
@@ -118,7 +119,7 @@ public class GlobalEvents : MonoBehaviour
 
     public void SetNextTempo(float newTempo)
     {
-        nextTempo = Mathf.Max(newTempo, nextTempo);
+        nextTempo = Mathf.FloorToInt(Mathf.Clamp(newTempo, minTempo, maxTempo));
     }
 
     private void SetNewTempo()
